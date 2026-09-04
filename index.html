@@ -142,33 +142,6 @@
   }
   .s33-card.c1{top:33%}
   .s33-card.c2{top:64%}
-  /* 呼吸动效文字:水平居中,demo 下方,无背景 */
-  .s33-breath{
-    position:absolute; left:65%; top:66%; z-index:5;
-    transform:translateX(-50%);
-    margin:0; text-align:center;
-    background:transparent !important;
-    border:none !important; padding:0 !important;
-  }  .s33-breath-text{
-    margin:0; padding:0; line-height:1.6;
-    font-size:1.7cqw; font-weight:600;
-    color:#d8f5e4; letter-spacing:.06em;
-  }
-  .s33-breath-ch{
-    display:inline-block; opacity:0;
-    animation:s33Char 3.6s ease-in-out infinite;
-    animation-delay:calc(var(--i) * .12s);
-  }
-  .s33-breath-sub{
-    display:block; margin-top:.6cqw;
-    font-size:1.05cqw; font-weight:400;
-    color:rgba(216,245,228,.7); letter-spacing:.04em;
-  }
-  @keyframes s33Char{
-    0%,100%{opacity:0; transform:translateY(2px)}
-    12%,28%{opacity:1; transform:translateY(0)}
-    45%,100%{opacity:.25; transform:translateY(0)}
-  }
   /* 两个加载动效 demo: d1 视频对齐 n1, d2 GIF 对齐 n2, 16px 圆角 */
   .s33-demo{
     position:absolute; z-index:3;
@@ -180,6 +153,46 @@
   .s33-demo video, .s33-demo img{
     display:block; height:100%; width:auto;
     border-radius:16px;
+  }
+  /* d2 图片下方的呼吸动效卡 — 与 breath.html 独立 demo 完全一致
+     类名 .card / .title / .breath 保持与 standalone demo 一致 */
+  #p33 .card{
+    position:absolute; left:65%; top:65%; z-index:3;
+    transform:translateX(-50%);
+    width:max-content;
+    max-width:min(20cqw, 320px);
+    padding:1.4cqw 1.6cqw 1.3cqw;
+    border:.18cqw solid rgba(255,255,255,.18);
+    border-radius:1.4cqw;
+    background:
+      radial-gradient(circle at 50% 14%, rgba(248,216,121,.24), transparent 42%),
+      linear-gradient(145deg, rgba(255,255,255,.18), rgba(11,36,9,.86));
+    box-shadow:0 1.2cqw 2.6cqw rgba(0,0,0,.32);
+    text-align:center;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB",sans-serif;
+  }
+  #p33 .title{
+    margin:0;
+    font-size:1.2cqw; font-weight:900; line-height:1.2; color:#fff;
+  }
+  #p33 .breath{
+    margin:.5cqw 0 0;
+    color:rgba(235,246,231,.72);
+    font-size:.78cqw; font-weight:600; line-height:1.4;
+    white-space:pre;
+  }
+  #p33 .breath span{
+    display:inline-block;
+    animation:letterBreath 2.87s ease-in-out infinite both;
+    animation-delay:calc(var(--i) * .055s);
+  }
+  @keyframes letterBreath{
+    0%   {opacity:0; transform:translateY(12px)}
+    14.6%{opacity:1; transform:translateY(0)}
+    58.2%{opacity:1; transform:translateY(0)}
+    75.6%{opacity:.62; transform:translateY(0)}
+    100% {opacity:0; transform:translateY(0)}
   }
   /* Page 35: 新空页面,只保留 CSS 背景,等用户提供文字和图片 */
   #p35{background:#000}
@@ -240,6 +253,10 @@
         '<div class="s33-demo d1"><video src="loading-demo.mp4?v=20260904h" autoplay loop muted playsinline preload="auto"></video></div>' +
         '<p class="s33-note n2">任务无法量化时长不稳定的流程</p>' +
         '<div class="s33-demo d2"><img src="loading-demo.gif?v=20260904g" alt="加载动效"></div>' +
+        '<div class="card">' +
+          '<h2 class="title">晨光正在为你铺开</h2>' +
+          '<p class="breath"><span style="--i:0">正</span><span style="--i:1">在</span><span style="--i:2">编</span><span style="--i:3">排</span><span style="--i:4"> </span><span style="--i:5">3</span><span style="--i:6">0</span><span style="--i:7"> </span><span style="--i:8">分</span><span style="--i:9">钟</span><span style="--i:10">通</span><span style="--i:11">勤</span><span style="--i:12">节</span><span style="--i:13">目</span><span style="--i:14">，</span><span style="--i:15">请</span><span style="--i:16">稍</span><span style="--i:17">候</span></p>' +
+        '</div>' +
         '<div class="s33-pill">👉 加载设计解决的问题</div>' +
         '<svg class="s33-arrow" viewBox="0 0 20 100" preserveAspectRatio="none">' +
           '<path d="M10 0 V90 M2.5 82 L10 91 L17.5 82" stroke="rgba(255,255,255,.8)" stroke-width="2.5" fill="none"/>' +
@@ -256,7 +273,6 @@
           '<span class="s33-breath-ch" style="--i:5">你</span>' +
           '<span class="s33-breath-ch" style="--i:6">铺</span>' +
           '<span class="s33-breath-ch" style="--i:7">开</span>' +
-          '<span class="s33-breath-sub">正在编排30分钟通勤节目,请稍候</span>' +
         '</p></div>' +
       '</div></div>';
     } else if (i === 35) {
