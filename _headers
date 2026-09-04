@@ -1,0 +1,11 @@
+# Cache static assets for 1 year
+/pages/*
+  Cache-Control: public, max-age=31536000, immutable
+/loading-demo.mp4
+  Cache-Control: public, max-age=31536000, immutable
+/loading-demo.gif
+  Cache-Control: public, max-age=31536000, immutable
+/demo.webm
+  Cache-Control: public, max-age=31536000, immutable
+/page-*.jpg
+  Cache-Control: public, max-age=31536000, immutable
