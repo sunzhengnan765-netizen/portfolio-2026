@@ -1,0 +1,28 @@
+# 系统文件
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+*.tmp
+
+# 编辑器配置
+.vscode/
+.idea/
+
+# 日志
+*.log
+
+# 备份文件
+*.bak
+*.orig
+
+# 不要上传源 PDF（已渲染为 jpg）
+百度优选02.pdf
+百度优选03.pdf
+汽水音乐14.pdf
+
+# 不要上传聊天截图临时文件
+924b656d40edc524b0b55367ae59429*.png
+a8ce896eaa975b2430c4b349d99996aa*.png
+d0c4c1c8616af19682a0d2ea1440b8ab*.png

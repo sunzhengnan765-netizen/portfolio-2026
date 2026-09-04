@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ethan · UX Portfolio 2026</title>
+<style>
+  html,body{margin:0;padding:0;background:#0e0e10;color:#eaeaea;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+  header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;background:rgba(14,14,16,.85);backdrop-filter:blur(8px);border-bottom:1px solid #222}
+  header b{letter-spacing:.5px}
+  header a{color:#9ad;margin-left:14px;text-decoration:none;font-size:13px}
+  header a:hover{color:#fff}
+  main{display:flex;flex-direction:column;align-items:center;gap:18px;padding:18px}
+  figure{margin:0;width:100%;max-width:1280px;background:#000;border-radius:6px;overflow:hidden;box-shadow:0 6px 30px rgba(0,0,0,.4)}
+  figure img{display:block;width:100%;height:auto}
+  figcaption{padding:8px 14px;font-size:12px;color:#888;border-top:1px solid #1a1a1a}
+  footer{padding:30px;text-align:center;color:#555;font-size:12px}
+  @media (max-width:640px){ header{font-size:12px;padding:8px 12px } main{gap:10px;padding:10px} }
+
+  /* live page 23: demo video floating in the right empty area, aligned to text block */
+  #p23 .media{position:relative}
+  #p23 .media img{display:block}
+  #p23 .side-demo{
+    position:absolute;
+    left:68.1%; top:17.1%;
+    height:74.6%; width:auto;
+    border-radius:7.5% / 3.41%;
+    object-fit:cover;
+    box-shadow:0 24px 70px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.08);
+    background:#000;
+    pointer-events:none;
+  }
+  /* live page 25: 汽水音乐·业务目标 — Figma 精确还原 */
+  #p25 .media{position:relative}
+  .slide25{
+    position:relative; width:100%; aspect-ratio:1927/1098; overflow:hidden;
+    background-color:#000;
+    background-image:linear-gradient(180deg,
+      rgba(16,185,129,.51) 0%,
+      rgba(16,185,129,.32) 44%,
+      rgba(16,185,129,.09) 100%);
+    container-type:inline-size;
+    color:#fff;
+    font-family:'PingFang SC',-apple-system,BlinkMacSystemFont,"Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  }
+  .s25-content{
+    position:absolute; left:50%; top:25.9%;
+    transform:translateX(-50%);
+    width:48%; display:flex; flex-direction:column;
+    align-items:center; gap:2.18cqw; text-align:center;
+  }
+  .s25-tag{font-size:1.66cqw; font-weight:500; line-height:2.33cqw; color:#fff; margin:0}
+  .s25-title{font-size:4.78cqw; font-weight:500; line-height:1.36; color:#fff; margin:0; letter-spacing:.02em}
+  .s25-sub{font-size:1.25cqw; font-weight:500; line-height:1.76cqw; color:#fff; margin:0; max-width:66.8%}
+  .s25-metric{font-size:1.66cqw; font-weight:400; line-height:2.33cqw; color:rgba(255,255,255,.5); margin:0}
+
+  /* live page 26: 竞品分析 — 左栏深色+右栏图片蒙版 */
+  #p26 .media{position:relative}
+  .slide26{
+    position:relative; width:100%; aspect-ratio:1920/1080; overflow:hidden;
+    background-color:#000;
+    container-type:inline-size;
+    color:#fff;
+    font-family:'PingFang SC',-apple-system,BlinkMacSystemFont,"Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    display:flex;
+  }
+  /* 左栏:竞品分析 — 按 Figma Frame 1912055565 精确绝对定位 */
+  .s26-left{
+    width:50%; position:relative; overflow:hidden;
+    background:linear-gradient(180deg,#04422d 0%,#03291c 50%,#000f0a 100%);
+  }
+  .s26-title-l{
+    position:absolute; left:2.86cqw; top:7.5cqw;
+    font-size:3.4cqw; font-weight:700; color:#fff; margin:0; letter-spacing:.05em;
+  }
+  /* 竞品手机图片:三列 flex, 保持原始比例, 不拉伸;底对齐让标签同行 */
+  .s26-phones{
+    position:absolute; left:2.86cqw; top:29.5%;
+    width:44.05cqw;
+    display:flex; flex-direction:row; align-items:flex-end; gap:1.98cqw;
+  }
+  .s26-phone-item{flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; gap:.8cqw}
+  .s26-phone{
+    width:100%;
+    display:flex; align-items:flex-start; justify-content:center;
+    overflow:visible;
+  }
+  .s26-phone img{
+    width:100%; height:auto; display:block;
+    border-radius:.6cqw;
+    object-fit:cover; object-position:center;
+  }
+  .s26-phone-label{
+    font-size:.83cqw; font-weight:600; line-height:132%;
+    letter-spacing:-.02em; color:rgba(255,255,255,.72); text-align:center; margin:0;
+  }
+  /* 右栏:汽水音乐独特优势 — 画板右半图,左24圆角(X945略压中线) */
+  .s26-right{
+    width:50%; position:relative; overflow:hidden;
+    margin-left:-.78cqw; /* Figma X945 vs 中线960,图片压入左栏15px */
+  }
+  .s26-right img{
+    width:100%; height:100%; object-fit:cover; object-position:center; display:block;
+    border-top-left-radius:1.25cqw;   /* 24px */
+    border-bottom-left-radius:1.25cqw; /* 24px,右侧0 */
+  }
+
+  /* live page 33: rebuilt in pure CSS — smooth gradient bg + real text (no banding) */
+  #p33 .media{position:relative}
+  .slide33{
+    position:relative; width:100%; aspect-ratio:1948/1099; overflow:hidden;
+    /* 黑底 + 品牌绿渐变,直接用 background-image 避免 mask 兼容性问题 */
+    background-color:#000;
+    background-image:linear-gradient(180deg,
+      rgba(16,185,129,.51) 0%,
+      rgba(16,185,129,.32) 44%,
+      rgba(16,185,129,.09) 100%);
+    container-type:inline-size;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  }
+  .s33-title{position:absolute; left:4.4%; top:11.2%; margin:0; font-size:2.95cqw; font-weight:700; letter-spacing:.04em; color:#f4faf7}
+  .s33-note{position:absolute; margin:0; top:16.4%; font-size:1.38cqw; color:rgba(232,248,238,.96); transform:translateX(-50%)}
+  .s33-note.n1{left:45%}
+  .s33-note.n2{left:65%}
+  .s33-pill{
+    position:absolute; left:3.9%; top:41%; height:6.9%;
+    display:inline-flex; align-items:center;
+    padding:0 2.1cqw; border-radius:1.2cqw;
+    background:#1f4d3f; color:#d4f0e0; font-size:2.35cqw;
+    box-shadow:inset 0 0 0 .08cqw rgba(143,211,191,.35);
+  }
+  .s33-arrow{position:absolute; left:13.9%; top:49.8%; width:0.85cqw; height:8.6%}
+  .s33-arrow path{stroke:rgba(180,240,210,.9)}
+  .s33-body{position:absolute; left:4%; top:58.8%; margin:0; font-size:1.38cqw; line-height:1.75; color:#c8e6d8}
+  .s33-card{
+    position:absolute; left:79.7%; width:16.5%;
+    margin:0; padding:1.15cqw 0 1.15cqw 1.3cqw;
+    border-left:0.18cqw solid #8fd3bf;
+    background:linear-gradient(90deg,rgba(143,211,191,.15),rgba(143,211,191,0) 70%);
+    font-size:1.38cqw; line-height:1.8; color:#f0faf4;
+  }
+  .s33-card.c1{top:33%}
+  .s33-card.c2{top:64%}
+  /* 呼吸动效文字:水平居中,demo 下方,无背景 */
+  .s33-breath{
+    position:absolute; left:65%; top:66%; z-index:5;
+    transform:translateX(-50%);
+    margin:0; text-align:center;
+    background:transparent !important;
+    border:none !important; padding:0 !important;
+  }  .s33-breath-text{
+    margin:0; padding:0; line-height:1.6;
+    font-size:1.7cqw; font-weight:600;
+    color:#d8f5e4; letter-spacing:.06em;
+  }
+  .s33-breath-ch{
+    display:inline-block; opacity:0;
+    animation:s33Char 3.6s ease-in-out infinite;
+    animation-delay:calc(var(--i) * .12s);
+  }
+  .s33-breath-sub{
+    display:block; margin-top:.6cqw;
+    font-size:1.05cqw; font-weight:400;
+    color:rgba(216,245,228,.7); letter-spacing:.04em;
+  }
+  @keyframes s33Char{
+    0%,100%{opacity:0; transform:translateY(2px)}
+    12%,28%{opacity:1; transform:translateY(0)}
+    45%,100%{opacity:.25; transform:translateY(0)}
+  }
+  /* 两个加载动效 demo: d1 视频对齐 n1, d2 GIF 对齐 n2, 16px 圆角 */
+  .s33-demo{
+    position:absolute; z-index:3;
+    border-radius:16px; overflow:visible;
+    transform:translateX(-50%);
+  }
+  .s33-demo.d1{left:45%; top:22%; width:auto; height:65%}
+  .s33-demo.d2{left:65%; top:24%; width:auto; height:35%}
+  .s33-demo video, .s33-demo img{
+    display:block; height:100%; width:auto;
+    border-radius:16px;
+  }
+  /* Page 35: 新空页面,只保留 CSS 背景,等用户提供文字和图片 */
+  #p35{background:#000}
+  .slide-bg{
+    position:relative; width:100%; aspect-ratio:1930.81/1098.28; overflow:hidden;
+  }
+</style>
+</head>
+<body>
+<header>
+  <b>Ethan · UX Portfolio 2026</b>
+  <span>
+    <a href="#p1">封面</a>
+    <a id="nav-prev" href="#p1">上一项目</a>
+    <a id="nav-next" href="#p1">下一项目</a>
+  </span>
+</header>
+<main>
+<script>
+  const total = 39;
+  const LIVE_PAGE = 23;
+
+  for (let i = 1; i <= total; i++) {
+    const n = String(i).padStart(2, '0');
+    let inner = '';
+    if (i === LIVE_PAGE) {
+      inner = '<div class="media">' +
+              '<img src="page-23-bg.jpg" alt="汽水音乐 AI 混合电台 — page ' + i + '">' +
+              '<video class="side-demo" src="demo.webm" autoplay loop muted playsinline preload="auto"></video>' +
+              '</div>';
+    } else if (i === 25) {
+      inner = '<div class="media"><div class="slide25">' +
+        '<div class="s25-content">' +
+        '<p class="s25-tag">汽水音乐 · 业务目标</p>' +
+        '<h2 class="s25-title">提升年轻用户群体的<br>日活和留存</h2>' +
+        '<p class="s25-sub">巨量引擎提供的数据:18~30岁的Z世代人群占68%</p>' +
+        '<p class="s25-metric">指标:DAU、人均播放时长</p>' +
+        '</div>' +
+      '</div></div>';
+    } else if (i === 26) {
+      inner = '<div class="media"><div class="slide26">' +
+        '<div class="s26-left">' +
+          '<h2 class="s26-title-l">竞品分析</h2>' +
+          '<div class="s26-phones">' +
+            '<div class="s26-phone-item"><div class="s26-phone"><img src="pages/p26-phone1-trim.png?v=20260904c" alt="QQ音乐"></div><p class="s26-phone-label">单一的模式</p></div>' +
+            '<div class="s26-phone-item"><div class="s26-phone"><img src="pages/p26-phone2-trim.png?v=20260904c" alt="小宇宙"></div><p class="s26-phone-label">独立的app</p></div>' +
+            '<div class="s26-phone-item"><div class="s26-phone"><img src="pages/p26-phone3-trim.png?v=20260904c" alt="网易云音乐"></div><p class="s26-phone-label">网易云需主动搜索想听的内容</p></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="s26-right">' +
+          '<img src="pages/p26-bg-right.jpg" alt="汽水音乐独特优势:视频内容音频化 × 字节生态联动">' +
+        '</div>' +
+      '</div></div>';
+    } else if (i === 33) {
+      inner = '<div class="media"><div class="slide33">' +
+        '<h2 class="s33-title">动效设计</h2>' +
+        '<p class="s33-note n1">AI电台属于定制化服务</p>' +
+        '<div class="s33-demo d1"><video src="loading-demo.mp4?v=20260904h" autoplay loop muted playsinline preload="auto"></video></div>' +
+        '<p class="s33-note n2">任务无法量化时长不稳定的流程</p>' +
+        '<div class="s33-demo d2"><img src="loading-demo.gif?v=20260904g" alt="加载动效"></div>' +
+        '<div class="s33-pill">👉 加载设计解决的问题</div>' +
+        '<svg class="s33-arrow" viewBox="0 0 20 100" preserveAspectRatio="none">' +
+          '<path d="M10 0 V90 M2.5 82 L10 91 L17.5 82" stroke="rgba(255,255,255,.8)" stroke-width="2.5" fill="none"/>' +
+        '</svg>' +
+        '<p class="s33-body">系统处理时间不变前提下优化用户等待环节的体验<br>从而提升可控感，减少焦虑，提升体验与留存。</p>' +
+        '<p class="s33-card c1">用元素转移注意力<br>焦点减弱时间感</p>' +
+        '<p class="s33-card c2">文案呼吸感提醒用户<br>感知到内容正在加载</p>' +
+        '<div class="s33-breath"><p class="s33-breath-text">' +
+          '<span class="s33-breath-ch" style="--i:0">晨</span>' +
+          '<span class="s33-breath-ch" style="--i:1">光</span>' +
+          '<span class="s33-breath-ch" style="--i:2">正</span>' +
+          '<span class="s33-breath-ch" style="--i:3">在</span>' +
+          '<span class="s33-breath-ch" style="--i:4">为</span>' +
+          '<span class="s33-breath-ch" style="--i:5">你</span>' +
+          '<span class="s33-breath-ch" style="--i:6">铺</span>' +
+          '<span class="s33-breath-ch" style="--i:7">开</span>' +
+          '<span class="s33-breath-sub">正在编排30分钟通勤节目,请稍候</span>' +
+        '</p></div>' +
+      '</div></div>';
+    } else if (i === 35) {
+      /* 汽水音乐14.pdf → page-35-bg.jpg */
+      inner = '<div class="media"><img src="page-35-bg.jpg" alt="汽水音乐14 — page ' + i + '"></div>';
+    } else if (i === 38) {
+      /* 百度优选02.pdf → page-38-bg.jpg */
+      inner = '<div class="media"><img src="page-38-bg.jpg" alt="百度优选02 — page ' + i + '"></div>';
+    } else if (i === 39) {
+      /* 百度优选03.pdf → page-39-bg.jpg */
+      inner = '<div class="media"><img src="page-39-bg.jpg" alt="百度优选03 — page ' + i + '"></div>';
+    } else {
+      inner = '<img src="pages/page-' + n + '.jpg" alt="page ' + i + '" loading="lazy" decoding="async">';
+    }
+    document.write(
+      '<figure id="p' + i + '">' + inner +
+      '<figcaption>Page ' + i + ' / ' + total + '</figcaption>' +
+      '</figure>'
+    );
+  }
+</script>
+</main>
+<footer>Converted from PDF · Page 23 嵌入视频 demo · scroll or press <kbd>J</kbd>/<kbd>K</kbd> to jump</footer>
+<script>
+  // dev auto-reload: poll file mtimes, reload when changed. localhost only.
+  if (/^(127\.0\.0\.1|localhost)$/.test(location.hostname)) {
+    const files = [location.href, 'demo.webm', 'page-23-bg.jpg', 'page-35-bg.jpg', 'page-38-bg.jpg', 'page-39-bg.jpg', 'loading-demo.mp4', 'loading-demo.gif', 'pages/page-33.jpg', 'pages/p26-phone1-trim.png', 'pages/p26-phone2-trim.png', 'pages/p26-phone3-trim.png', 'pages/p26-bg-right.jpg', 'pages/morning-radio-loading.gif'];
+    const mtimes = {};
+    setInterval(async () => {
+      for (const f of files) {
+        try {
+          const r = await fetch(f, { method: 'HEAD', cache: 'no-store' });
+          const t = r.headers.get('last-modified') || '';
+          if (mtimes[f] && t && mtimes[f] !== t) { location.reload(); return; }
+          mtimes[f] = t;
+        } catch (e) {}
+      }
+    }, 1500);
+  }
+</script>
+<script>
+  let cur = 1;
+  // 项目分组首页:每个项目的"封面页"号
+  const projectHomes = { 4:4, 23:23, 37:37 };
+  function prevProjectPage(p) {
+    const keys = Object.keys(projectHomes).map(Number).sort((a,b)=>a-b);
+    let home = 1;
+    for (const k of keys) { if (k < p) home = k; }
+    return home;
+  }
+  function nextProjectPage(p) {
+    const keys = Object.keys(projectHomes).map(Number).sort((a,b)=>a-b);
+    let home = total;
+    for (const k of keys) { if (k > p) { home = k; break; } }
+    return home;
+  }
+  addEventListener('keydown', e => {
+    if (e.key === 'j' || e.key === 'J') cur = Math.min(total, cur + 1);
+    else if (e.key === 'k' || e.key === 'K') cur = Math.max(1, cur - 1);
+    else return;
+    location.hash = '#p' + cur;
+    e.preventDefault();
+  });
+  // 根据当前 hash 更新导航链接
+  function updateNav() {
+    const m = /#p(\d+)/.exec(location.hash);
+    if (!m) return;
+    const p = +m[1];
+    const prev = document.getElementById('nav-prev');
+    const next = document.getElementById('nav-next');
+    if (prev) prev.href = '#p' + prevProjectPage(p);
+    if (next) next.href = '#p' + nextProjectPage(p);
+  }
+  addEventListener('hashchange', updateNav);
+  updateNav();
+</script>
+</body>
+</html>
