@@ -275,6 +275,9 @@
           '<span class="s33-breath-ch" style="--i:7">开</span>' +
         '</p></div>' +
       '</div></div>';
+    } else if (i === 34) {
+      /* 汽水音乐13.pdf → page-34-bg.jpg */
+      inner = '<div class="media"><img src="page-34-bg.jpg" alt="汽水音乐13 — page ' + i + '"></div>';
     } else if (i === 35) {
       /* 汽水音乐14.pdf → page-35-bg.jpg */
       inner = '<div class="media"><img src="page-35-bg.jpg" alt="汽水音乐14 — page ' + i + '"></div>';
@@ -299,7 +302,7 @@
 <script>
   // dev auto-reload: poll file mtimes, reload when changed. localhost only.
   if (/^(127\.0\.0\.1|localhost)$/.test(location.hostname)) {
-    const files = [location.href, 'demo.webm', 'page-23-bg.jpg', 'page-35-bg.jpg', 'page-38-bg.jpg', 'page-39-bg.jpg', 'loading-demo.mp4', 'loading-demo.gif', 'pages/page-33.jpg', 'pages/p26-phone1-trim.png', 'pages/p26-phone2-trim.png', 'pages/p26-phone3-trim.png', 'pages/p26-bg-right.jpg', 'pages/morning-radio-loading.gif'];
+    const files = [location.href, 'demo.webm', 'page-23-bg.jpg', 'page-35-bg.jpg', 'page-38-bg.jpg', 'page-39-bg.jpg', 'page-34-bg.jpg', 'loading-demo.mp4', 'loading-demo.gif', 'pages/page-33.jpg', 'pages/p26-phone1-trim.png', 'pages/p26-phone2-trim.png', 'pages/p26-phone3-trim.png', 'pages/p26-bg-right.jpg', 'pages/morning-radio-loading.gif'];
     const mtimes = {};
     setInterval(async () => {
       for (const f of files) {
