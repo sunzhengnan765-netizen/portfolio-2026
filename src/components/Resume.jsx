@@ -150,7 +150,7 @@ export default function Resume() {
               {skills.map((s, i) => (
                 <span
                   key={i}
-                  className="rounded-full border border-white/80 px-2 py-[3px] font-display text-[clamp(10px,0.9vw,12px)] font-medium text-white/95 leading-tight"
+                  className="inline-flex h-6 items-center justify-center rounded-full border border-white/80 px-3 font-display text-[clamp(10px,0.9vw,12px)] font-medium text-white/95 leading-none"
                 >
                   {s}
                 </span>
