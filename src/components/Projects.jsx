@@ -42,10 +42,9 @@ const projects = [
     period: "2026.03 · 3 pages",
     tags: ["电商", "活动 KV", "视觉延展", "主视觉"],
     thumbs: [
-      "/pages/baidu-1.jpg",
-      "/pages/baidu-2.jpg",
-      "/pages/baidu-3.jpg",
-      "/pages/baidu-4.jpg",
+      "/pages/page-37.jpg",
+      "/pages/page-38.jpg",
+      "/pages/page-36.jpg",
     ],
     href: "/project-baidu.html",
   },
