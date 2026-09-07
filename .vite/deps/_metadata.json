@@ -1,0 +1,46 @@
+{
+  "hash": "93305319",
+  "configHash": "4999f12a",
+  "lockfileHash": "1cc86bec",
+  "browserHash": "1452f2a9",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "32b217ea",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "130429fb",
+      "needsInterop": true
+    },
+    "@studio-freight/lenis": {
+      "src": "../../node_modules/@studio-freight/lenis/dist/lenis.mjs",
+      "file": "@studio-freight_lenis.js",
+      "fileHash": "40757930",
+      "needsInterop": false
+    },
+    "lucide-react": {
+      "src": "../../node_modules/lucide-react/dist/esm/lucide-react.mjs",
+      "file": "lucide-react.js",
+      "fileHash": "06d15d0e",
+      "needsInterop": false
+    },
+    "hls.js": {
+      "src": "../../node_modules/hls.js/dist/hls.mjs",
+      "file": "hls__js.js",
+      "fileHash": "fa38f336",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-3R2MIHDY": {
+      "file": "chunk-3R2MIHDY.js"
+    },
+    "chunk-DC5AMYBS": {
+      "file": "chunk-DC5AMYBS.js"
+    }
+  }
+}
