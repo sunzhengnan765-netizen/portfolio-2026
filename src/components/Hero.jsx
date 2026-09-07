@@ -1,22 +1,29 @@
 import { useEffect, useState } from "react";
 import VideoBackground from "./VideoBackground";
 
-const TITLE_CHARS = "Ethan—sun".split("");
-
 /**
- * Hero 区段叠加顺序（z 自下而上）：
- *  0  极光 PNG + 本地 mp4 视频 + 绿色 hue 层（hero-bg-layer 类）
- * 10  左侧/底部暗渐变 + 中央顶部光晕
- * 20  文字布局（标题逐字升起、中部信息带）
- * 30  黑场遮罩（t=0 全覆盖，t≈2.5s 淡出）
+ * Hero 区段 — 参考 fabrica.framer.media 黑场开屏
+ * 核心差异（vs 上一版本）：
+ *  1. 无独立 overlay 遮罩 — 靠 body bg-ink(#070b0a) 自身充当"黑场"
+ *  2. 标题整段 translateY(640px) → 0 + fade in（2.1s, ease [0.56,0.22,0.05,0.99]）
+ *  3. revealed 在 t=0 立即挂到 section — 动画由 CSS transition-delay 精确编排
+ *  4. 保留：绿色块展开（原创设计，fabrica 没有）
+ *
+ * 时间线：
+ *   t=0     revealed class 挂载 → 标题开始 2.1s 上移（此时 body 深色 = 黑场）
+ *   t≈1s    绿色块开始展开（delay 1s）
+ *   t≈1.2s  极光 + 视频 + hue 层开始淡入（delay 1.2s）
+ *   t≈1.5s  导航 + 信息带开始淡入（delay 1.5s）
  */
 export default function Hero() {
+  // t=0 立即 revealed — 动画全靠 CSS transition-delay 编排
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
-    // 入场触发：t=0 显示黑场，t≈2.8s 后 revealed class 让黑场淡出 + 背景淡入 + 导航淡入
-    const t = setTimeout(() => setRevealed(true), 2800);
-    return () => clearTimeout(t);
+    // 关键帧：revealed 先 false 一帧（让初始 opacity/transform 生效），
+    // 下一帧再 true，确保 CSS transition 能捕获状态变化
+    const id = requestAnimationFrame(() => setRevealed(true));
+    return () => cancelAnimationFrame(id);
   }, []);
 
   return (
@@ -26,7 +33,7 @@ export default function Hero() {
         revealed ? "hero-revealed" : ""
       }`}
     >
-      <VideoBackground revealed={revealed} />
+      <VideoBackground />
 
       {/* 左侧 → 透明 渐变 */}
       <div
@@ -109,18 +116,10 @@ export default function Hero() {
 
         <div className="flex-1" />
 
-        {/* 底部：Ethan—sun 逐字升起 + 绿色块 */}
-        <div className="intro-fade flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-12">
-          <h1 className="m-0 whitespace-nowrap font-display text-[clamp(44px,7.5vw,150px)] font-medium leading-[0.95] tracking-[-0.03em] text-white">
-            {TITLE_CHARS.map((c, i) => (
-              <span
-                key={i}
-                className="hero-char"
-                style={{ "--i": i, letterSpacing: c === "-" ? "0.1em" : undefined }}
-              >
-                {c === " " ? "\u00A0" : c}
-              </span>
-            ))}
+        {/* 底部：标题整段上移 + 绿色块展开 */}
+        <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-12">
+          <h1 className="hero-title m-0 whitespace-nowrap font-display text-[clamp(44px,7.5vw,150px)] font-medium leading-[0.95] tracking-[-0.03em] text-white">
+            Ethan—sun
             <span
               aria-hidden="true"
               className="hero-block ml-[0.08em] inline-block h-[0.13em] w-[0.6em] bg-accent"
@@ -128,9 +127,6 @@ export default function Hero() {
           </h1>
         </div>
       </div>
-
-      {/* 黑场遮罩 — t=0 全覆盖，t≈2.5s 淡出 */}
-      <div aria-hidden="true" className="hero-overlay" />
     </section>
   );
 }
