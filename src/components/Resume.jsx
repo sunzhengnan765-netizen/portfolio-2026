@@ -220,7 +220,7 @@ export default function Resume() {
                 {/* 分点描述 — 每点可换行 */}
                 <ul className="m-0 list-none space-y-2 pl-0 font-display text-[clamp(13px,1.1vw,16px)] leading-[1.6] text-white/80">
                   {p.bullets.map((b, bi) => (
-                    <li key={bi} className="whitespace-nowrap">
+                    <li key={bi} className="md:whitespace-nowrap">
                       <span className="mr-2 inline-block h-[6px] w-[6px] translate-y-[-2px] rounded-full bg-white/30" />
                       {b}
                     </li>
