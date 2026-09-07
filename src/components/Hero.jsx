@@ -123,7 +123,7 @@ export default function Hero() {
             ))}
             <span
               aria-hidden="true"
-              className="hero-block ml-[0.08em] inline-block h-[0.13em] bg-accent"
+              className="hero-block ml-[0.08em] inline-block h-[0.13em] w-[0.6em] bg-accent"
             />
           </h1>
         </div>
