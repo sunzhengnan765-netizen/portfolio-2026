@@ -78,14 +78,14 @@ export default function Projects() {
           return (
             <div
               key={p.num}
-              className="project-row border-b border-white/20"
+              className="project-row border-b border-white/20 py-4"
               data-open={isOpen}
             >
               {/* 触发行 */}
               <button
                 type="button"
                 onClick={() => setActiveIndex(isOpen ? -1 : i)}
-                className="project-trigger group flex w-full items-center gap-4 bg-transparent py-6 text-left text-white no-underline transition-colors duration-300 hover:bg-white/[0.02] md:py-7"
+                className="project-trigger group flex w-full items-center gap-4 bg-transparent py-8 text-left text-white no-underline transition-colors duration-300 hover:bg-white/[0.02] md:py-9"
                 aria-expanded={isOpen}
               >
                 {/* 编号 */}

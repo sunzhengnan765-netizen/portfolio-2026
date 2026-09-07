@@ -1,33 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import VideoBackground from "./VideoBackground";
 
 /**
- * Hero 区段 — 参考 fabrica.framer.media 黑场开屏
- * 核心差异（vs 上一版本）：
- *  1. 无独立 overlay 遮罩 — 靠 body bg-ink(#070b0a) 自身充当"黑场"
- *  2. 标题整段 translateY(640px) → 0 + fade in（2.1s, ease [0.56,0.22,0.05,0.99]）
- *  3. revealed 在 t=0 立即挂到 section — 动画由 CSS transition-delay 精确编排
- *  4. 保留：绿色块展开（原创设计，fabrica 没有）
- *
- * 时间线：
- *   t=0     revealed class 挂载 → 标题开始 2.1s 上移（此时 body 深色 = 黑场）
- *   t≈1s    绿色块开始展开（delay 1s）
- *   t≈1.2s  极光 + 视频 + hue 层开始淡入（delay 1.2s）
- *   t≈1.5s  导航 + 信息带开始淡入（delay 1.5s）
+ * Hero 区段 — 参考 fabrica.framer.media
+ * 滚动效果：视频/背景 0.3x 视差，标题 0.15x 视差，形成层次
  */
 export default function Hero() {
-  // 关键：初始 false 让 CSS 初始状态（opacity 0 + translateY 640px）生效，
-  // 再切到 true 触发 transition。必须等浏览器先渲染完第一帧再切，否则动画不触发。
+  const sectionRef = useRef(null);
   const [revealed, setRevealed] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
+  // 入场动画触发
   useEffect(() => {
-    // 双重 rAF：确保浏览器完成初始绘制后再切换状态
     let raf1, raf2;
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
         setRevealed(true);
-        // 关键：把 revealed class 挂到 body 上，让 Navbar 等独立组件
-        // 里的 .intro-fade 也能匹配到 CSS 规则（它们不在 Hero section 内部）
         document.body.classList.add("hero-revealed");
       });
     });
@@ -38,14 +26,52 @@ export default function Hero() {
     };
   }, []);
 
+  // 滚动视差 — 仅 Hero 可见时更新，性能友好
+  useEffect(() => {
+    let raf = null;
+    let ticking = false;
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      raf = requestAnimationFrame(() => {
+        if (sectionRef.current) {
+          const rect = sectionRef.current.getBoundingClientRect();
+          // 只在 Hero 顶部还在视口内时才更新（0 ~ viewportHeight）
+          if (rect.bottom > 0 && rect.top < window.innerHeight) {
+            setScrollY(window.scrollY);
+          }
+        }
+        ticking = false;
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  // 视差变换值（scrollY * 系数，负号 = 向上移动比页面慢）
+  const bgParallax = scrollY * 0.3;   // 视频/极光：最慢
+  const titleParallax = scrollY * 0.15; // 标题：中等
+
   return (
     <section
       id="home"
+      ref={sectionRef}
       className={`relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden bg-ink ${
         revealed ? "hero-revealed" : ""
       }`}
     >
-      <VideoBackground />
+      {/* 视频 + 极光背景 — 0.3x 视差（比页面慢） */}
+      <div
+        className="absolute inset-0"
+        style={{ transform: `translate3d(0, ${-bgParallax}px, 0)` }}
+      >
+        <VideoBackground />
+      </div>
 
       {/* 左侧 → 透明 渐变 */}
       <div
@@ -58,7 +84,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-ink/80 via-transparent to-transparent"
       />
 
-      {/* 中央顶部椭圆光晕 */}
+      {/* 中央顶部椭圆光晕 — 0.5x 视差 */}
       <svg
         aria-hidden="true"
         className="hero-glow pointer-events-none absolute left-1/2 top-0 z-10"
@@ -66,6 +92,7 @@ export default function Hero() {
         height="420"
         viewBox="0 0 1100 420"
         fill="none"
+        style={{ transform: `translate3d(-50%, ${-scrollY * 0.5}px, 0)` }}
       >
         <defs>
           <filter
@@ -128,8 +155,11 @@ export default function Hero() {
 
         <div className="flex-1" />
 
-        {/* 底部：标题整段上移 + 绿色块展开 */}
-        <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-12">
+        {/* 底部：标题整段上移 + 绿色块展开 — 0.15x 视差 */}
+        <div
+          className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-12"
+          style={{ transform: `translate3d(0, ${-titleParallax}px, 0)` }}
+        >
           <h1 className="hero-title m-0 whitespace-nowrap font-display text-[clamp(44px,7.5vw,150px)] font-medium leading-[0.95] tracking-[-0.03em] text-white">
             Ethan—sun
             <span
