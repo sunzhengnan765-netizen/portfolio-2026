@@ -17,8 +17,8 @@ const projects = [
     tags: ["B2G", "AI 安防", "交互设计", "界面落地"],
     thumbs: [
       "/pages/page-04.jpg",
-      "/pages/page-05.jpg",
-      "/pages/page-06.jpg",
+      "/pages/page-07.jpg",
+      "/pages/page-08.jpg",
     ],
     href: "/project-qiaosi.html",
   },
