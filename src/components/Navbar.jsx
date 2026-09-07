@@ -9,7 +9,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="absolute left-0 right-0 top-0 z-40 flex items-center justify-between px-6 py-5 md:px-10 md:py-6">
+    <header className="intro-fade absolute left-0 right-0 top-0 z-40 flex items-center justify-between px-6 py-5 md:px-10 md:py-6">
       {/* Logo */}
       <a
         href="#home"

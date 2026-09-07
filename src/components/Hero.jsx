@@ -1,18 +1,32 @@
+import { useEffect, useState } from "react";
 import VideoBackground from "./VideoBackground";
+
+const TITLE_CHARS = "Ethan—sun".split("");
 
 /**
  * Hero 区段叠加顺序（z 自下而上）：
- *  0  极光 PNG 兜底层 + HLS 视频（VideoBackground 内部）+ 绿色 hue 统一层
- * 10  左侧暗渐变 + 底部暗渐变
- * 10  中央顶部椭圆光晕（cyan/暗绿色调，25px Gaussian blur）
+ *  0  极光 PNG + 本地 mp4 视频 + 绿色 hue 层（hero-bg-layer 类）
+ * 10  左侧/底部暗渐变 + 中央顶部光晕
+ * 20  文字布局（标题逐字升起、中部信息带）
+ * 30  黑场遮罩（t=0 全覆盖，t≈2.5s 淡出）
  */
 export default function Hero() {
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    // 入场触发：t=0 显示黑场，t≈2.8s 后 revealed class 让黑场淡出 + 背景淡入 + 导航淡入
+    const t = setTimeout(() => setRevealed(true), 2800);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <section
       id="home"
-      className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden bg-ink"
+      className={`relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden bg-ink ${
+        revealed ? "hero-revealed" : ""
+      }`}
     >
-      <VideoBackground />
+      <VideoBackground revealed={revealed} />
 
       {/* 左侧 → 透明 渐变 */}
       <div
@@ -25,7 +39,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-ink/80 via-transparent to-transparent"
       />
 
-      {/* 中央顶部椭圆光晕（cyan/暗绿色调，25px Gaussian blur — 原 CodeNest spec 版式） */}
+      {/* 中央顶部椭圆光晕 */}
       <svg
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-0 z-10 -translate-x-1/2"
@@ -62,14 +76,12 @@ export default function Hero() {
         />
       </svg>
 
-      {/* 文字布局 — 参考 davies home-tunnel：
-          左中 01/02/03 锚点列表 · 右中绿点状态 + © 2026
-          左下超大字标 + 绿色下划块 · 右下段落 + 描边按钮 */}
+      {/* 文字布局 */}
       <div className="absolute inset-0 z-20 flex flex-col px-6 pb-10 md:px-10 md:pb-12">
         <div className="flex-1" />
 
-        {/* 中部信息带 */}
-        <div className="flex items-center justify-between gap-6">
+        {/* 中部信息带 — intro-fade 延迟淡入 */}
+        <div className="intro-fade flex items-center justify-between gap-6">
           <ul className="m-0 flex list-none flex-col gap-2 p-0">
             {[
               { label: "01/简历Resume", href: "#resume" },
@@ -97,17 +109,28 @@ export default function Hero() {
 
         <div className="flex-1" />
 
-        {/* 底部信息带 */}
-        <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-12">
+        {/* 底部：Ethan—sun 逐字升起 + 绿色块 */}
+        <div className="intro-fade flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-12">
           <h1 className="m-0 whitespace-nowrap font-display text-[clamp(44px,7.5vw,150px)] font-medium leading-[0.95] tracking-[-0.03em] text-white">
-            ETHAN SUN
+            {TITLE_CHARS.map((c, i) => (
+              <span
+                key={i}
+                className="hero-char"
+                style={{ "--i": i, letterSpacing: c === "-" ? "0.1em" : undefined }}
+              >
+                {c === " " ? "\u00A0" : c}
+              </span>
+            ))}
             <span
               aria-hidden="true"
-              className="ml-[0.08em] inline-block h-[0.13em] w-[0.6em] bg-accent"
+              className="hero-block ml-[0.08em] inline-block h-[0.13em] bg-accent"
             />
           </h1>
         </div>
       </div>
+
+      {/* 黑场遮罩 — t=0 全覆盖，t≈2.5s 淡出 */}
+      <div aria-hidden="true" className="hero-overlay" />
     </section>
   );
 }
