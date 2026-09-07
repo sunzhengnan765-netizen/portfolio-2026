@@ -16,9 +16,9 @@ const projects = [
     period: "2025.12 ～ 2026.02 · 19 pages",
     tags: ["B2G", "AI 安防", "交互设计", "界面落地"],
     thumbs: [
-      "/pages/page-04.jpg",
-      "/pages/page-07.jpg",
-      "/pages/page-08.jpg",
+      "/pages/qiaosi-cover.jpg",
+      "/pages/qiaosi-dashboard.jpg",
+      "/pages/qiaosi-detail.jpg",
     ],
     href: "/project-qiaosi.html",
   },
