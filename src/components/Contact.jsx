@@ -50,7 +50,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative flex min-h-screen w-full flex-col justify-center px-6 py-20 md:px-[9vw] md:py-16"
+      className="relative mx-auto flex min-h-screen max-w-[1200px] w-full flex-col justify-center px-6 py-20 md:px-[5vw] md:py-16"
     >
       <div className="grid grid-cols-1 gap-12 text-white md:grid-cols-[minmax(260px,0.42fr)_1fr] md:items-center md:gap-[clamp(40px,6vw,110px)]">
         {/* 左侧 — 头像 + 联系方式 */}
