@@ -42,9 +42,10 @@ const projects = [
     period: "2026.03 · 3 pages",
     tags: ["电商", "活动 KV", "视觉延展", "主视觉"],
     thumbs: [
-      "/pages/page-37.jpg",
-      "/pages/page-38.jpg",
-      "/pages/page-37.jpg",
+      "/pages/baidu-1.jpg",
+      "/pages/baidu-2.jpg",
+      "/pages/baidu-3.jpg",
+      "/pages/baidu-4.jpg",
     ],
     href: "/project-baidu.html",
   },
@@ -129,12 +130,12 @@ export default function Projects() {
               {/* 展开内容 */}
               <div className={`project-content ${isOpen ? "is-open" : ""}`}>
                 <div className="project-content-inner">
-                  {/* 缩略图 */}
+                  {/* 缩略图 — 拉长为宽幅 */}
                   <div className="mb-6 flex gap-3">
                     {p.thumbs.map((src, ti) => (
                       <div
                         key={ti}
-                        className="h-[140px] w-[140px] flex-shrink-0 overflow-hidden rounded-xl bg-white/5"
+                        className="h-[120px] w-[220px] flex-shrink-0 overflow-hidden rounded-xl bg-white/5"
                       >
                         <img
                           src={src}

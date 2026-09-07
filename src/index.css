@@ -145,3 +145,18 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* 顶部椭圆光晕 — 延迟淡入 + 微微下沉（配合整体入场节奏） */
+.hero-glow {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-20px);
+  transition:
+    opacity 1.4s cubic-bezier(0.56, 0.22, 0.05, 0.99) 0.3s,
+    transform 1.4s cubic-bezier(0.56, 0.22, 0.05, 0.99) 0.3s;
+  will-change: opacity, transform;
+}
+
+.hero-revealed .hero-glow {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

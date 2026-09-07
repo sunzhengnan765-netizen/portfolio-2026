@@ -49,7 +49,7 @@ export default function Hero() {
       {/* 中央顶部椭圆光晕 */}
       <svg
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-0 z-10 -translate-x-1/2"
+        className="hero-glow pointer-events-none absolute left-1/2 top-0 z-10"
         width="1100"
         height="420"
         viewBox="0 0 1100 420"
