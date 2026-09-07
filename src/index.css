@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset beyond Tailwind base */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  background-color: #070b0a;
+  color: #fff;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", "Inter", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   液态玻璃卡（200×200 + 1.4px 锐利渐变边框）
+   必须在 @tailwind components 之后、utilities 之前定义，
+   这样 @layer 上下文能正确解析
+   ============================================================ */
+@layer components {
+  .glass-card {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background-color: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 16px;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    color: #fff;
+    overflow: hidden;
+  }
+
+  /* 锐利渐变边框：mask 减去内部，只留 1.4px 描边 */
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1.4px;
+    border-radius: inherit;
+    background: linear-gradient(180deg, #ffffff, #ffffff);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+}
