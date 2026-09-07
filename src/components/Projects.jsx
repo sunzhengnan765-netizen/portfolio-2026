@@ -29,9 +29,9 @@ const projects = [
     period: "2026.08 ～ 2026.09 · 14 pages",
     tags: ["C 端", "AI 推荐", "情绪感知", "体验闭环"],
     thumbs: [
-      "/pages/page-31.jpg",
-      "/pages/page-34.jpg",
-      "/pages/page-39.jpg",
+      "/pages/qishui-preview-1.jpg",
+      "/pages/qishui-preview-2.jpg",
+      "/pages/qishui-preview-3.jpg",
     ],
     href: "/project-qishui.html",
   },
