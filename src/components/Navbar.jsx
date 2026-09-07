@@ -1,54 +1,85 @@
-/**
- * Capsule navigation — 胶囊导航栏
- * 左侧：圆形头像 + 名字
- * 右侧：Work / Projects / Resume 链接
- * position: fixed, top: 24px, 水平居中
- */
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+
+const links = [
+  { label: "2 internship experience", href: "#contact" },
+];
+
 export default function Navbar() {
-  const navLinks = [
-    { label: "Work", href: "#projects" },
-    { label: "Projects", href: "#projects" },
-    { label: "Resume", href: "#contact" },
-  ];
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav
-      aria-label="Primary"
-      className="intro-fade fixed left-1/2 top-6 z-50 flex w-max -translate-x-1/2 items-center gap-1 rounded-full border border-white/20 bg-white/10 px-2 py-1.5 backdrop-blur-[5px] shadow-[0_1px_0_rgba(255,255,255,0.08)_inset,0_4px_20px_rgba(0,0,0,0.4)]"
-    >
-      {/* 左侧 — 头像 + 名字 */}
+    <header className="intro-fade absolute left-0 right-0 top-0 z-40 flex items-center justify-between px-6 py-5 md:px-10 md:py-6">
+      {/* Logo */}
       <a
         href="#home"
-        className="flex items-center gap-2 pr-2 no-underline transition-opacity hover:opacity-80"
+        className="text-xl font-medium tracking-tight text-white"
+        aria-label="Back to home"
       >
-        <img
-          src="/pages/avatar.jpg"
-          alt="Ethan Sun"
-          className="h-[32px] w-[32px] flex-shrink-0 rounded-full object-cover"
-          style={{ objectPosition: "50% 32%" }}
-        />
-        <span className="text-[14px] font-semibold tracking-tight text-white">
-          Ethan Sun
-        </span>
+        2026
       </a>
 
-      {/* 分隔点 */}
-      <span className="h-4 w-px bg-white/20" />
-
-      {/* 右侧 — 导航链接 */}
-      <div className="flex items-center gap-0.5">
-        {navLinks.map((l, i) => (
+      {/* Desktop nav — 右对齐两行：链接 + © 2026 */}
+      <nav
+        className="hidden flex-col items-end gap-1.5 md:flex"
+        aria-label="Primary"
+      >
+        {links.map((l) => (
           <a
             key={l.label}
             href={l.href}
-            className={`rounded-full px-3 py-1.5 text-[13px] font-medium tracking-tight text-white/80 no-underline transition-colors hover:bg-white/10 hover:text-white ${
-              i === navLinks.length - 1 ? "pr-3" : ""
-            }`}
+            className="text-[15px] text-white/85 transition-colors duration-200 hover:text-white"
           >
             {l.label}
           </a>
         ))}
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile menu trigger */}
+      <button
+        type="button"
+        aria-label="Open menu"
+        aria-expanded={open}
+        aria-controls="ethan-mobile-menu"
+        onClick={() => setOpen(true)}
+        className="md:hidden"
+      >
+        <Menu className="h-6 w-6 text-white" />
+      </button>
+
+      {/* Mobile full-screen overlay */}
+      {open && (
+        <div
+          id="ethan-mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-ink/95 backdrop-blur-md"
+        >
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+            className="absolute right-6 top-6"
+          >
+            <X className="h-7 w-7 text-white" />
+          </button>
+          <nav
+            className="flex flex-col items-center gap-8"
+            aria-label="Mobile"
+          >
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="text-3xl font-semibold tracking-tight text-white transition-colors hover:text-white/70"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      )}
+    </header>
   );
 }
