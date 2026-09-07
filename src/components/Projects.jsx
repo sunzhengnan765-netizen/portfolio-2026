@@ -16,9 +16,9 @@ const projects = [
     period: "2025.12 ～ 2026.02 · 19 pages",
     tags: ["B2G", "AI 安防", "交互设计", "界面落地"],
     thumbs: [
-      "/pages/qiaosi-process.jpg",
-      "/pages/qiaosi-dashboard.jpg",
-      "/pages/qiaosi-detail.jpg",
+      "/pages/qiaosi-preview-1.jpg",
+      "/pages/qiaosi-preview-2.jpg",
+      "/pages/qiaosi-preview-3.jpg",
     ],
     href: "/project-qiaosi.html",
   },
@@ -139,7 +139,6 @@ export default function Projects() {
                         <img
                           src={src}
                           alt=""
-                          loading="lazy"
                           className="h-full w-full object-cover"
                           onError={(e) => {
                             e.currentTarget.style.display = "none";
