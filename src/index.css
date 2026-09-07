@@ -57,3 +57,29 @@ body {
     pointer-events: none;
   }
 }
+
+/* ============================================================
+   Projects 手风琴展开动画（参考 fabrica.framer.media Services）
+   max-height + opacity + translateY 纯 CSS 过渡
+   ============================================================ */
+.project-content {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  overflow: hidden;
+  transition:
+    max-height 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s,
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s;
+  will-change: max-height, opacity, transform;
+}
+
+.project-content.is-open {
+  max-height: 600px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-content-inner {
+  padding: 8px 0 28px;
+}
