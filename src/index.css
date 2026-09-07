@@ -141,7 +141,9 @@ body {
   will-change: opacity, transform;
 }
 
-.hero-revealed .intro-fade {
+/* 同时匹配 section 和 body 上的 hero-revealed */
+.hero-revealed .intro-fade,
+body.hero-revealed .intro-fade {
   opacity: 1;
   transform: translateY(0);
 }
@@ -156,7 +158,8 @@ body {
   will-change: opacity, transform;
 }
 
-.hero-revealed .hero-glow {
+.hero-revealed .hero-glow,
+body.hero-revealed .hero-glow {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }

@@ -26,11 +26,15 @@ export default function Hero() {
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
         setRevealed(true);
+        // 关键：把 revealed class 挂到 body 上，让 Navbar 等独立组件
+        // 里的 .intro-fade 也能匹配到 CSS 规则（它们不在 Hero section 内部）
+        document.body.classList.add("hero-revealed");
       });
     });
     return () => {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
+      document.body.classList.remove("hero-revealed");
     };
   }, []);
 
