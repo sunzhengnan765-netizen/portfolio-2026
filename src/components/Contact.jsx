@@ -84,8 +84,8 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* 右侧 — 大标题 + subtitle（右对齐） */}
-        <div className="pb-2 text-right">
+        {/* 右侧 — 大标题 + subtitle（移动端居中 / PC 右对齐） */}
+        <div className="pb-2 text-center md:text-right">
           <h2 className="m-0 font-sans text-[clamp(36px,5.5vw,72px)] font-normal leading-[0.95] tracking-[-0.06em] text-white">
             Hardcore Vibe Coder
           </h2>
