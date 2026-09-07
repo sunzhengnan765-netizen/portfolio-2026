@@ -42,7 +42,7 @@ export default function Navbar() {
         aria-expanded={open}
         aria-controls="ethan-mobile-menu"
         onClick={() => setOpen(true)}
-        className="md:hidden"
+        className="flex min-h-[44px] min-w-[44px] items-center justify-center md:hidden"
       >
         <Menu className="h-6 w-6 text-white" />
       </button>
@@ -59,7 +59,7 @@ export default function Navbar() {
             type="button"
             aria-label="Close menu"
             onClick={() => setOpen(false)}
-            className="absolute right-6 top-6"
+            className="absolute right-4 top-4 flex min-h-[44px] min-w-[44px] items-center justify-center"
           >
             <X className="h-7 w-7 text-white" />
           </button>

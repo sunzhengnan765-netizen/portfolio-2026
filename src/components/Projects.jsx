@@ -93,21 +93,17 @@ export default function Projects() {
                   — {p.num}
                 </span>
 
-                {/* 项目名 */}
+                {/* 项目名 + period（桌面端 period 跟项目名同行） */}
                 <span className="flex-1 font-sans text-[clamp(26px,3.4vw,52px)] font-normal leading-[1.05] tracking-[-0.05em]">
                   {p.name[0]}
                   <br />
                   <span className="text-white/75">{p.name[1]}</span>
                 </span>
 
-                {/* 右侧：meta + 图标（桌面端） */}
+                {/* 右侧：时间 + 图标（桌面端） */}
                 <span className="hidden items-center gap-5 md:flex">
-                  <span className="max-w-[320px] text-right text-[13px] leading-[1.5] text-white/55">
-                    {p.desc}
-                    <br />
-                    <span className="inline-block mt-1 text-white/35">
-                      {p.period}
-                    </span>
+                  <span className="text-right text-[13px] leading-[1.5] text-white/35">
+                    {p.period.replace(/\s*·\s*\d+\s*pages?$/i, "")}
                   </span>
                   {/* 展开/折叠图标 */}
                   <span className={`accordion-icon flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/[0.04] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? "rotate-90" : ""}`}>
@@ -129,16 +125,17 @@ export default function Projects() {
               {/* 展开内容 */}
               <div className={`project-content ${isOpen ? "is-open" : ""}`}>
                 <div className="project-content-inner">
-                  {/* 缩略图 — 拉长为宽幅 */}
-                  <div className="mb-6 flex gap-3">
+                  {/* 缩略图 — 移动端横向可滚动窄卡片，桌面端固定尺寸 */}
+                  <div className="mb-6 flex gap-3 overflow-x-auto pb-1 md:overflow-visible">
                     {p.thumbs.map((src, ti) => (
                       <div
                         key={ti}
-                        className="h-[120px] w-[220px] flex-shrink-0 overflow-hidden rounded-xl bg-white/5"
+                        className="aspect-video w-[70vw] flex-shrink-0 overflow-hidden rounded-xl bg-white/5 md:h-[120px] md:w-[220px]"
                       >
                         <img
                           src={src}
                           alt=""
+                          loading="lazy"
                           className="h-full w-full object-cover"
                           onError={(e) => {
                             e.currentTarget.style.display = "none";
@@ -148,11 +145,9 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  {/* 描述（移动端展示） */}
-                  <p className="mb-5 text-[13px] leading-[1.6] text-white/60 md:hidden">
+                  {/* 描述（桌面端 + 移动端都显示） */}
+                  <p className="mb-5 text-[13px] leading-[1.6] text-white/60">
                     {p.desc}
-                    <br />
-                    <span className="text-white/40">{p.period}</span>
                   </p>
 
                   {/* 标签 */}

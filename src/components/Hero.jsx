@@ -127,7 +127,7 @@ export default function Hero() {
         <div className="flex-1" />
 
         {/* 中部信息带 — intro-fade 延迟淡入 */}
-        <div className="intro-fade flex items-center justify-between gap-6">
+        <div className="intro-fade flex flex-col items-start justify-between gap-4 md:flex-row md:items-center md:gap-6">
           <ul className="m-0 flex list-none flex-col gap-2 p-0">
             {[
               { label: "01/简历Resume", href: "#resume" },
@@ -137,7 +137,7 @@ export default function Hero() {
               <li key={l.label}>
                 <a
                   href={l.href}
-                  className="font-sans text-[14px] font-medium tracking-[0.04em] text-white/90 transition-colors duration-200 hover:text-accent md:text-[15px]"
+                  className="font-sans text-[13px] font-medium tracking-[0.04em] text-white/90 transition-colors duration-200 hover:text-accent md:text-[15px]"
                 >
                   {l.label}
                 </a>
@@ -145,7 +145,7 @@ export default function Hero() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-10 md:gap-16">
+          <div className="hidden md:flex md:items-center md:gap-16">
             <p className="m-0 flex items-center gap-3 font-sans text-[12px] font-medium tracking-[0.12em] text-white/90 md:text-[13px]">
               <span className="inline-block h-2 w-2 rounded-full bg-accent" />
               Vibe coding
