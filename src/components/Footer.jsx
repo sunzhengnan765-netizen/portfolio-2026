@@ -12,9 +12,6 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { label: "Twitter / X", href: "https://x.com" },
-  { label: "Instagram", href: "https://instagram.com" },
-  { label: "Dribbble", href: "https://dribbble.com" },
   { label: "GitHub", href: "https://github.com/sunzhengnan765-netizen" },
 ];
 
