@@ -16,14 +16,22 @@ import VideoBackground from "./VideoBackground";
  *   t≈1.5s  导航 + 信息带开始淡入（delay 1.5s）
  */
 export default function Hero() {
-  // t=0 立即 revealed — 动画全靠 CSS transition-delay 编排
+  // 关键：初始 false 让 CSS 初始状态（opacity 0 + translateY 640px）生效，
+  // 再切到 true 触发 transition。必须等浏览器先渲染完第一帧再切，否则动画不触发。
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
-    // 关键帧：revealed 先 false 一帧（让初始 opacity/transform 生效），
-    // 下一帧再 true，确保 CSS transition 能捕获状态变化
-    const id = requestAnimationFrame(() => setRevealed(true));
-    return () => cancelAnimationFrame(id);
+    // 双重 rAF：确保浏览器完成初始绘制后再切换状态
+    let raf1, raf2;
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        setRevealed(true);
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
   }, []);
 
   return (
