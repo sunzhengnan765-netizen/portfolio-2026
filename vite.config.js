@@ -6,6 +6,10 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
+      input: {
+        main: 'index.html',
+        polaroid: 'polaroid-test.html',
+      },
       output: {
         manualChunks: {
           // React 运行时单独分包，方便浏览器缓存
