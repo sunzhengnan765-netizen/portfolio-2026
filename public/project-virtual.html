@@ -30,7 +30,7 @@ body.enter-lock{overflow:hidden}
 .hv-top{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:6;display:flex;align-items:center;justify-content:space-between;gap:24px;width:min(40vw,820px);min-width:320px;padding:9px 12px 9px 20px;background:rgba(8,8,8,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.07);border-radius:8px}
 .hv-top a{color:rgba(255,255,255,.92);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .25s;font-family:"TASA Orbiter","Inter",sans-serif}
 .hv-top a:hover{color:#fff}
-.hv-top .logo{font-weight:800;font-size:clamp(13px,1.35vw,26px);letter-spacing:.01em}
+.hv-top .logo{font-weight:400;font-size:clamp(13px,1.35vw,26px);letter-spacing:.01em;font-family:"Big Caslon","BigCaslon","Cormorant Garamond",Georgia,serif}
 .hv-top .hv-back{gap:7px;color:rgba(255,255,255,.78);font-size:clamp(11px,1.05vw,20px);font-weight:600;letter-spacing:.02em;padding:5px 12px;border-radius:6px;transition:background .25s,color .25s}
 .hv-top .hv-back:hover{background:rgba(255,255,255,.08);color:#fff}
 .hv-top .hv-back svg{width:1em;height:1em}
@@ -58,11 +58,12 @@ body.enter-lock{overflow:hidden}
 /* 左侧超大文字 — Big Caslon 衬线，完整展示 */
 .hv-bigtext{position:absolute;left:4vw;top:52%;transform:translateY(-50%);z-index:3;pointer-events:none;line-height:1.05;font-weight:400;color:#fff;letter-spacing:-.01em;text-transform:uppercase;white-space:nowrap;font-family:"Big Caslon","BigCaslon","Cormorant Garamond",Georgia,serif}
 .hv-bigtext span{display:block;font-size:clamp(32px,3.4vw,72px);opacity:.97}
+.hv-bigtext span:first-child{font-size:clamp(46px,5vw,108px)}
 /* 底部信息 — 左对齐于框左缘下方 */
 .hv-meta{position:absolute;left:calc(65.5% - var(--framew)/2);bottom:5.5vh;z-index:6;text-align:left;color:#fff;pointer-events:none}
-.hv-meta .year{font-size:clamp(10px,.95vw,19px);letter-spacing:.06em;opacity:.6;font-family:"TASA Orbiter","Inter",sans-serif;font-weight:600}
-.hv-meta .title{margin:6px 0 0;font-size:clamp(17px,1.7vw,34px);font-weight:800;letter-spacing:.01em;text-transform:uppercase;font-family:"TASA Orbiter","Inter",sans-serif}
-.hv-meta .cat{margin:5px 0 0;font-size:clamp(9px,.85vw,17px);letter-spacing:.12em;text-transform:uppercase;opacity:.55;font-family:"TASA Orbiter","Inter",sans-serif;font-weight:600}
+.hv-meta .year{font-size:clamp(10px,.95vw,19px);letter-spacing:.06em;opacity:.6;font-family:"Big Caslon","BigCaslon","Cormorant Garamond",Georgia,serif;font-weight:400}
+.hv-meta .title{margin:6px 0 0;font-size:clamp(17px,1.7vw,34px);font-weight:400;letter-spacing:.01em;text-transform:uppercase;font-family:"Big Caslon","BigCaslon","Cormorant Garamond",Georgia,serif}
+.hv-meta .cat{margin:5px 0 0;font-size:clamp(9px,.85vw,17px);letter-spacing:.12em;text-transform:uppercase;opacity:.55;font-family:"Big Caslon","BigCaslon","Cormorant Garamond",Georgia,serif;font-weight:400}
 /* 入场动画 */
 .hv-frame{opacity:0;transform:translate(-50%,-50%) scale(.92);animation:frameIn 1.1s cubic-bezier(.22,1,.36,1) .3s forwards}
 .hv-bigtext span{opacity:0;animation:slideL 1.1s cubic-bezier(.22,1,.36,1) both}
@@ -83,6 +84,7 @@ body.enter-lock{overflow:hidden}
 .hv-screen{inset:6.5%}
 .hv-bigtext{left:5vw;transform:translateY(-50%)}
 .hv-bigtext span{font-size:clamp(22px,5.5vw,36px)}
+.hv-bigtext span:first-child{font-size:clamp(30px,7.5vw,52px)}
 .hv-meta{left:6vw;bottom:4vh}
 .hv-meta .title{font-size:16px}
 .hv-btn{font-size:10px;padding:9px 16px;bottom:calc(6.5% + 8px)}
