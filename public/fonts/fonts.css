@@ -55,3 +55,10 @@
   font-display: swap;
   src: url(/fonts/KonstantGrotesk.woff2) format('woff2');
 }
+@font-face {
+  font-family: 'SaolText';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/SaolText-Italic.woff2) format('woff2');
+}
