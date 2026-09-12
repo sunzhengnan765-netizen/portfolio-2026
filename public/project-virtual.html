@@ -125,11 +125,6 @@ body.js .cover-inner{opacity:0;transform:translateY(80px) scale(.5);filter:blur(
 .dg-photo img.wm{transform:scale(1.06)}
 .dg-cap{height:calc(var(--ph)*.1776);display:flex;align-items:center;justify-content:center;padding:0 8%}
 .dg-cap b{font-family:"SourceHanSerifCN",serif;font-weight:700;font-size:calc(var(--ph)*.035);line-height:1.4;color:#3a372f;letter-spacing:.01em;text-align:center;white-space:nowrap}
-.dg-hud{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);pointer-events:none}
-.dg-hud .idx{color:rgba(255,255,255,.9)}
-.dg-hud .sep{width:34px;height:1px;background:rgba(255,255,255,.25)}
-.dg.light .dg-hud{color:rgba(20,22,26,.6)}
-.dg.light .dg-hud .idx{color:rgba(20,22,26,.9)}
 /* 静态摆位（无 JS / anim-off 降级）：第一张居中，其余向深处退去 */
 .dg-plane:nth-child(1){transform:translate3d(-4vw,0,0) scale(1)}
 .dg-plane:nth-child(2){transform:translate3d(16vw,0,-260px) scale(.76);opacity:.85;filter:blur(2px) brightness(.8)}
@@ -243,7 +238,6 @@ html.anim-off .lightbox{transition:none!important}
 <div class="dg-plane" data-word="Studio" data-pms="PMS 7527 C" data-accent="#8a97a5" data-bg="#efece6" data-b1="#d2c2ac" data-b2="#9fadbc" data-x="-0.58" data-light="1">
 <div class="dg-card"><span class="dg-date">2026.09</span><div class="dg-photo"><img class="g-pimg" data-full="/pages/virtual-shot-4.webp" src="/pages/virtual-shot-4.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 05：纯白影棚机车场景" loading="lazy" decoding="async"></div><div class="dg-cap"><b>去往下一站</b></div></div>
 </div>
-<div class="dg-hud"><span class="idx" id="dgIdx">01 / 05</span><span class="sep"></span><span id="dgWord">Denim</span></div>
 </div>
 </div>
 
@@ -357,7 +351,6 @@ var planes=Array.prototype.slice.call(dg.querySelectorAll('.dg-plane'));
 if(!planes.length)return;
 var bg=document.getElementById('dgBg');
 var bgB1=bg.querySelector('.b1'),bgB2=bg.querySelector('.b2');
-var hudIdx=document.getElementById('dgIdx'),hudWord=document.getElementById('dgWord');
 var N=planes.length;
 
 /* 常量（与参考站一致的世界参数）：满屏距离 4.66 units，planeGap 5，前后视距偏移 5 */
@@ -445,10 +438,6 @@ bgB2.style.backgroundColor=mixHex(moods[i0].b2,moods[i1].b2,bf);
 }
 bg.style.filter='brightness('+(1+Math.abs(vel)*.09).toFixed(3)+')';
 dg.classList.toggle('light',!!(moods[Math.round(f)]&&moods[Math.round(f)].light));
-/* HUD */
-var ai=clamp(Math.round(f),0,N-1);
-hudIdx.textContent='0'+(ai+1)+' / 0'+N;
-hudWord.textContent=moods[ai].word;
 }
 
 /* 鼠标视差（pointermove → NDC） */
