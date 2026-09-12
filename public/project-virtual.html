@@ -88,7 +88,7 @@ body.enter-lock{overflow:hidden}
 /* 第二屏：虚拟人多视图网格 — vertical.framer 式滚动揭示（scale+translateY+blur+opacity） */
 .cover{position:relative;min-height:100vh;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;padding:8vh 6vw}
 .cover-inner{position:relative;will-change:transform,opacity,filter;max-width:min(78vw,1400px);width:100%}
-.cover .pimg{position:relative;width:100%;aspect-ratio:2560/1707;background-size:contain;background-repeat:no-repeat;background-position:center}
+.cover .pimg{position:relative;width:100%;aspect-ratio:2560/1711;background-size:contain;background-repeat:no-repeat;background-position:center}
 /* 有 JS 时初始隐藏，由滚动驱动揭示；无 JS 直接显示 */
 body.js .cover-inner{opacity:0;transform:translateY(80px) scale(.5);filter:blur(24px);transition:transform .35s ease-out,opacity .35s ease-out,filter .35s ease-out}
 .cover::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 50%,transparent 60%,rgba(0,0,0,.5))}
@@ -190,7 +190,7 @@ html.anim-off .lightbox{transition:none!important}
 <!-- 第二屏：虚拟人多视图网格（vertical.framer 滚动揭示） -->
 <section class="cover">
 <div class="cover-inner">
-<div class="pimg" data-full="/pages/virtual-grid.webp" style="background-image:url(/pages/virtual-grid.webp)" role="img" aria-label="虚拟人角色多视图：正面、四分之三侧面、正侧面、背侧面多角度展示"></div>
+<div class="pimg" data-full="/pages/virtual-4view.webp" style="background-image:url(/pages/virtual-4view.webp)" role="img" aria-label="虚拟人角色多视图：正面、四分之三侧面、正侧面、背侧面多角度展示"></div>
 </div>
 </section>
 
