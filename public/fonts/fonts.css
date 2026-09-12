@@ -41,3 +41,10 @@
   font-display: swap;
   src: url(/fonts/TASAOrbiter-800.woff2) format('woff2');
 }
+@font-face {
+  font-family: 'ModernPrestige';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/ModernPrestige.woff2) format('woff2');
+}
