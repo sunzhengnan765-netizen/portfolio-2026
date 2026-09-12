@@ -55,9 +55,9 @@ body.enter-lock{overflow:hidden}
 .hv-btn{position:absolute;left:50%;bottom:calc(8.2% + 12px);transform:translateX(-50%);z-index:6;display:inline-flex;align-items:center;gap:9px;background:#e50914;color:#fff;border:none;padding:.7em 1.6em;font-size:clamp(10px,.9vw,16px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:background .25s,transform .25s;font-family:"TASA Orbiter","Inter",sans-serif;white-space:nowrap}
 .hv-btn:hover{background:#ff1a25;transform:translateX(-50%) translateY(-1px)}
 .hv-btn svg{width:1em;height:1em}
-/* 左侧超大裁切文字 — 大部分移出左边缘，仅露词尾 */
-.hv-bigtext{position:absolute;left:0;top:52%;transform:translateY(-50%) translateX(-45%);z-index:3;pointer-events:none;line-height:1.1;font-weight:800;color:#fff;letter-spacing:-.015em;text-transform:uppercase;white-space:nowrap;font-family:"TASA Orbiter","Inter",sans-serif}
-.hv-bigtext span{display:block;font-size:clamp(34px,3.6vw,78px);opacity:.97}
+/* 左侧超大文字 — Big Caslon 衬线，完整展示 */
+.hv-bigtext{position:absolute;left:4vw;top:52%;transform:translateY(-50%);z-index:3;pointer-events:none;line-height:1.05;font-weight:400;color:#fff;letter-spacing:-.01em;text-transform:uppercase;white-space:nowrap;font-family:"Big Caslon","BigCaslon","Cormorant Garamond",Georgia,serif}
+.hv-bigtext span{display:block;font-size:clamp(32px,3.4vw,72px);opacity:.97}
 /* 底部信息 — 左对齐于框左缘下方 */
 .hv-meta{position:absolute;left:calc(65.5% - var(--framew)/2);bottom:5.5vh;z-index:6;text-align:left;color:#fff;pointer-events:none}
 .hv-meta .year{font-size:clamp(10px,.95vw,19px);letter-spacing:.06em;opacity:.6;font-family:"TASA Orbiter","Inter",sans-serif;font-weight:600}
@@ -81,8 +81,8 @@ body.enter-lock{overflow:hidden}
 .hv-top .menu{font-size:11px;gap:10px}
 .hv-frame{--framew:88vw;left:50%;top:50%}
 .hv-screen{inset:6.5%}
-.hv-bigtext{transform:translateY(-50%) translateX(-32%)}
-.hv-bigtext span{font-size:clamp(26px,7vw,40px)}
+.hv-bigtext{left:5vw;transform:translateY(-50%)}
+.hv-bigtext span{font-size:clamp(22px,5.5vw,36px)}
 .hv-meta{left:6vw;bottom:4vh}
 .hv-meta .title{font-size:16px}
 .hv-btn{font-size:10px;padding:9px 16px;bottom:calc(6.5% + 8px)}
