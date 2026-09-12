@@ -51,10 +51,6 @@ body.enter-lock{overflow:hidden}
 .hv-corners i.tr{top:0;right:0;border-left:none;border-bottom:none}
 .hv-corners i.bl{bottom:0;left:0;border-right:none;border-top:none}
 .hv-corners i.br{bottom:0;right:0;border-left:none;border-top:none}
-/* 内框按钮 — 视频底部居中 */
-.hv-btn{position:absolute;left:50%;bottom:calc(8.2% + 12px);transform:translateX(-50%);z-index:6;display:inline-flex;align-items:center;gap:9px;background:#e50914;color:#fff;border:none;padding:.7em 1.6em;font-size:clamp(10px,.9vw,16px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:background .25s,transform .25s;font-family:"TASA Orbiter","Inter",sans-serif;white-space:nowrap}
-.hv-btn:hover{background:#ff1a25;transform:translateX(-50%) translateY(-1px)}
-.hv-btn svg{width:1em;height:1em}
 /* 左侧超大文字 — Big Caslon 衬线，完整展示 */
 .hv-bigtext{position:absolute;left:4vw;top:52%;transform:translateY(-50%);z-index:3;pointer-events:none;line-height:1.05;font-weight:400;color:#fff;letter-spacing:-.01em;text-transform:uppercase;white-space:nowrap;font-family:"Big Caslon","BigCaslon","Cormorant Garamond",Georgia,serif}
 .hv-bigtext span{display:block;font-size:clamp(32px,3.4vw,72px);opacity:.97}
@@ -72,7 +68,6 @@ body.enter-lock{overflow:hidden}
 .hv-bigtext span:nth-child(3){animation-delay:.65s}
 .hv-bigtext span:nth-child(4){animation-delay:.75s}
 .hv-top,.hv-meta{opacity:0;animation:fadeIn .9s ease .9s forwards}
-.hv-btn{opacity:0;animation:fadeIn .8s ease 1.2s forwards}
 @keyframes frameIn{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 @keyframes slideL{from{opacity:0;transform:translateX(-60px)}to{opacity:1;transform:translateX(0)}}
 @keyframes fadeIn{to{opacity:1}}
@@ -87,7 +82,6 @@ body.enter-lock{overflow:hidden}
 .hv-bigtext span:first-child{font-size:clamp(30px,7.5vw,52px)}
 .hv-meta{left:6vw;bottom:4vh}
 .hv-meta .title{font-size:16px}
-.hv-btn{font-size:10px;padding:9px 16px;bottom:calc(6.5% + 8px)}
 .hv-corners i{width:16px;height:16px;border-width:1.5px}
 }
 
@@ -142,7 +136,7 @@ body.js .cover-inner{opacity:0;transform:scale(.86);transition:transform .35s ea
 /* 降级 / 测试环境：直接呈现最终态 */
 html.anim-off body{overflow:auto!important}
 html.anim-off .hv-frame{opacity:1!important;transform:translate(-50%,-50%)!important;animation:none!important}
-html.anim-off .hv-bigtext span,html.anim-off .hv-top,html.anim-off .hv-meta,html.anim-off .hv-btn{opacity:1!important;transform:none!important;animation:none!important}
+html.anim-off .hv-bigtext span,html.anim-off .hv-top,html.anim-off .hv-meta{opacity:1!important;transform:none!important;animation:none!important}
 html.anim-off .g-frame,html.anim-off .media{opacity:1!important;transform:none!important;clip-path:none!important;animation:none!important}
 html.anim-off .cover .pimg{animation:none!important}
 html.anim-off .lightbox{transition:none!important}
@@ -184,10 +178,6 @@ html.anim-off .lightbox{transition:none!important}
 <div class="hv-line l-t"></div><div class="hv-line l-b"></div><div class="hv-line l-l"></div><div class="hv-line l-r"></div>
 <div class="hv-screen"><video id="hvVideo" src="/pages/virtual-hero.mp4" poster="/pages/virtual-hero-poster.webp" autoplay muted loop playsinline preload="auto" aria-label="虚拟人 × Levi's campaign 视频"></video></div>
 <div class="hv-corners"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i></div>
-<a class="hv-btn" href="#cover">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-View Project
-</a>
 </div>
 
 <div class="hv-meta">
