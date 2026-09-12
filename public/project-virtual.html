@@ -105,14 +105,15 @@ body.js .cover-inner{opacity:0;transform:translateY(80px) scale(.5);filter:blur(
 .chapter .desc{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:clamp(14px,1.1vw,17px);line-height:1.7;font-weight:400;color:rgba(255,255,255,.7);max-width:none;margin:18px auto 0;letter-spacing:.01em;white-space:nowrap;text-align:center}
 
 /* Atmospheric Depth Gallery 式深度画廊（tympanus.net/Tutorials/DepthGallery 交互还原） */
-.dg{position:relative;height:520vh}
-.dg-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#0a0c0e}
-.dg-bg{position:absolute;inset:0;transition:background-color 1.1s ease;will-change:filter}
+.dg{position:relative;height:520vh;background:#1c242e}
+.dg-bg{position:absolute;inset:0;z-index:0;transition:background-color 1.1s ease;will-change:filter}
 .dg-bg i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;transition:background-color 1.1s ease;pointer-events:none}
 .dg-bg .b1{width:56vw;height:56vw;left:6%;top:10%;animation:dgblob 26s ease-in-out infinite alternate}
 .dg-bg .b2{width:46vw;height:46vw;right:4%;bottom:6%;animation:dgblob 32s ease-in-out infinite alternate-reverse}
 @keyframes dgblob{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(8vw,-6vh,0) scale(1.16)}}
-.dg-grain{position:absolute;inset:-50%;opacity:.055;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E")}
+.dg-grain{position:absolute;inset:0;z-index:1;opacity:.05;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E")}
+.dg .chapter{position:relative;z-index:2}
+.dg-stage{position:sticky;top:0;z-index:3;height:100vh;overflow:hidden}
 .dg-plane{position:absolute;left:50%;top:50%;width:58.5vh;height:78vh;margin:-39vh 0 0 -29.25vh;will-change:transform,opacity,filter}
 .dg-card{position:absolute;inset:0;overflow:hidden;border-radius:10px;background:#0d0d0f;box-shadow:0 40px 130px rgba(0,0,0,.6)}
 .dg-card img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
@@ -214,30 +215,29 @@ html.anim-off .lightbox{transition:none!important}
 </div>
 </section>
 
+<!-- 深度画廊：Atmospheric Depth Gallery 式 Z 轴穿越（滚动=相机前进，鼠标=视差，速度=氛围） -->
+<div class="dg" id="dg">
+<div class="dg-bg" id="dgBg" style="background-color:#1c242e"><i class="b1" style="background-color:#3e5f83"></i><i class="b2" style="background-color:#1f3a55"></i></div>
+<div class="dg-grain"></div>
 <div class="chapter">
 <p class="n">Campaign <span class="mp">01</span> — Levi's®</p>
 <p class="desc">以虚拟人角色为核心，围绕 Levi's® 丹宁精神构建四组时尚叙事：近景情绪、黑胶唱片店、公路车内与纯白影棚，3D + AI 流程贯穿分镜、光影与成片。</p>
 <h2>Freedom, authenticity, self-expression</h2>
 </div>
-
-<!-- 深度画廊：Atmospheric Depth Gallery 式 Z 轴穿越（滚动=相机前进，鼠标=视差，速度=氛围） -->
-<div class="dg" id="dg">
 <div class="dg-stage">
-<div class="dg-bg" id="dgBg" style="background-color:#0e1216"><i class="b1" style="background-color:#31506f"></i><i class="b2" style="background-color:#14293d"></i></div>
-<div class="dg-grain"></div>
-<div class="dg-plane" data-word="Denim" data-pms="PMS 19-4052 TCX" data-accent="#4a7ba6" data-bg="#0e1216" data-b1="#31506f" data-b2="#14293d" data-x="-0.62">
+<div class="dg-plane" data-word="Denim" data-pms="PMS 19-4052 TCX" data-accent="#4a7ba6" data-bg="#1c242e" data-b1="#3e5f83" data-b2="#1f3a55" data-x="-0.62">
 <div class="dg-card"><img class="g-pimg" data-full="/pages/virtual-shot-1.webp" src="/pages/virtual-shot-1.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 01：暗调影棚凝视特写" loading="lazy" decoding="async"></div>
 <figcaption class="dg-tag"><i></i><b>Denim</b><span>PMS 19-4052 TCX</span></figcaption>
 </div>
-<div class="dg-plane" data-word="Vinyl" data-pms="PMS 7517 C" data-accent="#b07a3f" data-bg="#17110c" data-b1="#8a5a2b" data-b2="#3a2a18" data-x="0.56">
+<div class="dg-plane" data-word="Vinyl" data-pms="PMS 7517 C" data-accent="#b07a3f" data-bg="#2b2015" data-b1="#9c6c38" data-b2="#4e3820" data-x="0.56">
 <div class="dg-card"><img class="g-pimg" data-full="/pages/virtual-shot-2.webp" src="/pages/virtual-shot-2.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 02：黑胶唱片店场景" loading="lazy" decoding="async"></div>
 <figcaption class="dg-tag"><i></i><b>Vinyl</b><span>PMS 7517 C</span></figcaption>
 </div>
-<div class="dg-plane" data-word="Roadtrip" data-pms="PMS 1595 C" data-accent="#d98e4a" data-bg="#101a24" data-b1="#c77b3f" data-b2="#46688a" data-x="-0.5">
+<div class="dg-plane" data-word="Roadtrip" data-pms="PMS 1595 C" data-accent="#d98e4a" data-bg="#1e2f40" data-b1="#d08a4c" data-b2="#54789e" data-x="-0.5">
 <div class="dg-card"><img class="g-pimg" data-full="/pages/virtual-shot-3.webp" src="/pages/virtual-shot-3.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 03：车内公路场景" loading="lazy" decoding="async"></div>
 <figcaption class="dg-tag"><i></i><b>Roadtrip</b><span>PMS 1595 C</span></figcaption>
 </div>
-<div class="dg-plane" data-word="Studio" data-pms="PMS 7527 C" data-accent="#8a97a5" data-bg="#e9e5de" data-b1="#cbb9a2" data-b2="#93a3b2" data-x="0.68" data-light="1">
+<div class="dg-plane" data-word="Studio" data-pms="PMS 7527 C" data-accent="#8a97a5" data-bg="#efece6" data-b1="#d2c2ac" data-b2="#9fadbc" data-x="0.68" data-light="1">
 <div class="dg-card"><img class="g-pimg" data-full="/pages/virtual-shot-4.webp" src="/pages/virtual-shot-4.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 04：纯白影棚机车场景" loading="lazy" decoding="async"></div>
 <figcaption class="dg-tag"><i></i><b>Studio</b><span>PMS 7527 C</span></figcaption>
 </div>
