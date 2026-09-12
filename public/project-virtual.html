@@ -31,9 +31,9 @@ body.enter-lock{overflow:hidden}
 .hv-top a{color:rgba(255,255,255,.92);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .25s;font-family:"TASA Orbiter","Inter",sans-serif}
 .hv-top a:hover{color:#fff}
 .hv-top .logo{font-weight:800;font-size:clamp(13px,1.35vw,26px);letter-spacing:.01em}
-.hv-top .menu{display:flex;align-items:center;gap:14px;color:rgba(255,255,255,.75);font-size:clamp(11px,1.05vw,20px);font-weight:600;letter-spacing:.02em;font-family:"TASA Orbiter","Inter",sans-serif}
-.hv-top .menu .dots{display:grid;grid-template-columns:repeat(3,4px);gap:3px}
-.hv-top .menu .dots i{width:4px;height:4px;border-radius:1px;background:rgba(255,255,255,.8);display:block}
+.hv-top .hv-back{gap:7px;color:rgba(255,255,255,.78);font-size:clamp(11px,1.05vw,20px);font-weight:600;letter-spacing:.02em;padding:5px 12px;border-radius:6px;transition:background .25s,color .25s}
+.hv-top .hv-back:hover{background:rgba(255,255,255,.08);color:#fff}
+.hv-top .hv-back svg{width:1em;height:1em}
 /* 居中内框：外框承载角标+辅助线，视频内缩 8.2% */
 .hv-frame{position:absolute;left:65.5%;top:48%;transform:translate(-50%,-50%);width:var(--framew);aspect-ratio:1132/744;z-index:4}
 .hv-screen{position:absolute;inset:8.2%;border-radius:2px;overflow:hidden;background:#0a0a0a}
@@ -78,7 +78,7 @@ body.enter-lock{overflow:hidden}
 @media (max-width:768px){
 .hv-top{width:calc(100vw - 32px);min-width:0;top:10px;padding:8px 10px 8px 16px}
 .hv-top .logo{font-size:12px}
-.hv-top .menu{font-size:11px;gap:10px}
+.hv-top .hv-back{font-size:11px;padding:4px 10px}
 .hv-frame{--framew:88vw;left:50%;top:50%}
 .hv-screen{inset:6.5%}
 .hv-bigtext{left:5vw;transform:translateY(-50%)}
@@ -165,7 +165,10 @@ html.anim-off .lightbox{transition:none!important}
 
 <div class="hv-top">
 <a href="/#projects" class="logo">ETHAN SUN</a>
-<div class="menu"><span>Menu</span><span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+<a href="/#projects" class="hv-back" aria-label="返回项目列表">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+<span>Back</span>
+</a>
 </div>
 
 <div class="hv-bigtext" aria-hidden="true">
