@@ -85,14 +85,13 @@ body.enter-lock{overflow:hidden}
 .hv-corners i{width:16px;height:16px;border-width:1.5px}
 }
 
-/* Campaign 全屏标题卡 — scroll-linked 放大淡入（还原 vertical.framer 转场） */
-.cover{position:relative;height:100vh;overflow:hidden}
-.cover-inner{position:absolute;inset:0;will-change:transform,opacity}
-.cover .pimg{position:absolute;inset:-4%;background-size:cover;background-position:center;animation:kenburns 16s ease-in-out infinite alternate}
-/* 有 JS 时初始隐藏，由滚动驱动放大淡入；无 JS 直接显示 */
-body.js .cover-inner{opacity:0;transform:scale(.86);transition:transform .35s ease-out,opacity .35s ease-out}
-@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.1) translateY(-1.5%)}}
-.cover::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(0,0,0,.55))}
+/* 第二屏：虚拟人多视图网格 — vertical.framer 式滚动揭示（scale+translateY+blur+opacity） */
+.cover{position:relative;min-height:100vh;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;padding:8vh 6vw}
+.cover-inner{position:relative;will-change:transform,opacity,filter;max-width:min(78vw,1400px);width:100%}
+.cover .pimg{position:relative;width:100%;aspect-ratio:2560/1707;background-size:contain;background-repeat:no-repeat;background-position:center}
+/* 有 JS 时初始隐藏，由滚动驱动揭示；无 JS 直接显示 */
+body.js .cover-inner{opacity:0;transform:translateY(80px) scale(.5);filter:blur(24px);transition:transform .35s ease-out,opacity .35s ease-out,filter .35s ease-out}
+.cover::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 50%,transparent 60%,rgba(0,0,0,.5))}
 .scrollcue{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.65);font-size:11px;letter-spacing:.34em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:12px}
 .scrollcue .bar{width:1px;height:46px;background:linear-gradient(rgba(255,255,255,.7),transparent);animation:cue 1.8s ease-in-out infinite}
 @keyframes cue{0%,100%{opacity:.25;transform:scaleY(.6);transform-origin:top}50%{opacity:1;transform:scaleY(1)}}
@@ -138,6 +137,7 @@ html.anim-off body{overflow:auto!important}
 html.anim-off .hv-frame{opacity:1!important;transform:translate(-50%,-50%)!important;animation:none!important}
 html.anim-off .hv-bigtext span,html.anim-off .hv-top,html.anim-off .hv-meta{opacity:1!important;transform:none!important;animation:none!important}
 html.anim-off .g-frame,html.anim-off .media{opacity:1!important;transform:none!important;clip-path:none!important;animation:none!important}
+html.anim-off .cover-inner{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}
 html.anim-off .cover .pimg{animation:none!important}
 html.anim-off .lightbox{transition:none!important}
 
@@ -187,12 +187,11 @@ html.anim-off .lightbox{transition:none!important}
 </div>
 </section>
 
-<!-- Campaign 全屏标题卡 -->
+<!-- 第二屏：虚拟人多视图网格（vertical.framer 滚动揭示） -->
 <section class="cover">
 <div class="cover-inner">
-<div class="pimg" data-full="/pages/virtual-campaign-cover.webp" style="background-image:url(/pages/virtual-campaign-cover.webp)" role="img" aria-label="CAMPAIGN 01 / LEVI'S — Freedom, authenticity, self-expression"></div>
+<div class="pimg" data-full="/pages/virtual-grid.webp" style="background-image:url(/pages/virtual-grid.webp)" role="img" aria-label="虚拟人角色多视图：正面、四分之三侧面、正侧面、背侧面多角度展示"></div>
 </div>
-<div class="scrollcue"><span>Scroll</span><span class="bar"></span></div>
 </section>
 
 <div class="chapter">
@@ -282,18 +281,19 @@ var st=document.documentElement.scrollTop||document.body.scrollTop;
 var h=document.documentElement.scrollHeight-window.innerHeight;
 progress.style.width=(h>0?(st/h*100):0)+'%';
 topbar.classList.toggle('solid',st>window.innerHeight*.92);
-/* cover 滚动放大淡入（scale .86→1, opacity 0→1） */
+/* cover 滚动揭示（vertical.framer 式：scale .5→1, translateY 80→0, blur 24→0, opacity 0→1） */
 var cover=document.querySelector('.cover');
 if(cover){
 var ci=cover.querySelector('.cover-inner');
 if(ci){
 var animOff=document.documentElement.classList.contains('anim-off');
-if(animOff)ci.style.transition='none';
+if(animOff){ci.style.transition='none';}
 var cr=cover.getBoundingClientRect();
 var cp=1-cr.top/window.innerHeight;
 cp=Math.max(0,Math.min(1,cp));
-ci.style.transform='scale('+(0.86+0.14*cp).toFixed(3)+')';
+ci.style.transform='translateY('+(80*(1-cp)).toFixed(1)+'px) scale('+(0.5+0.5*cp).toFixed(3)+')';
 ci.style.opacity=cp.toFixed(3);
+ci.style.filter='blur('+(24*(1-cp)).toFixed(1)+'px)';
 }
 }
 if(!off){
