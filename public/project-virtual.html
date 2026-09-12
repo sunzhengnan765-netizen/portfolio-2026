@@ -104,16 +104,33 @@ body.js .cover-inner{opacity:0;transform:translateY(80px) scale(.5);filter:blur(
 .chapter p{margin:14px 0 0;max-width:560px;color:rgba(255,255,255,.55);font-size:14px;line-height:1.8}
 .chapter .desc{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:clamp(14px,1.1vw,17px);line-height:1.7;font-weight:400;color:rgba(255,255,255,.7);max-width:none;margin:18px auto 0;letter-spacing:.01em;white-space:nowrap;text-align:center}
 
-/* vertical.framer 式纯图错落画廊 */
-.gallery{max-width:1320px;margin:0 auto;padding:0 6vw}
-.g-item{position:relative;width:46vw;max-width:600px;margin:0 0 22vh}
-.g-item:nth-child(odd){margin-left:auto}
-.g-item:nth-child(even){width:38vw;max-width:490px;margin-top:-8vh}
-.g-item:nth-child(3){width:42vw;max-width:540px;margin-top:-4vh}
-.g-item:last-child{width:50vw;max-width:660px;margin:0 auto 22vh}
-.g-frame{position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:8px;background:#0d0d0f;opacity:0;clip-path:inset(13% 0);transform:scale(1.06);transition:opacity 1s ease,clip-path 1.25s cubic-bezier(.22,1,.36,1),transform 1.25s cubic-bezier(.22,1,.36,1)}
-.g-item.in .g-frame{opacity:1;clip-path:inset(0 0);transform:scale(1)}
-.g-pimg{position:absolute;top:-10%;left:0;width:100%;height:120%;object-fit:cover;display:block;will-change:transform;transition:transform .5s ease-out;cursor:zoom-in}
+/* Atmospheric Depth Gallery 式深度画廊（tympanus.net/Tutorials/DepthGallery 交互还原） */
+.dg{position:relative;height:520vh}
+.dg-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#0a0c0e}
+.dg-bg{position:absolute;inset:0;transition:background-color 1.1s ease;will-change:filter}
+.dg-bg i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;transition:background-color 1.1s ease;pointer-events:none}
+.dg-bg .b1{width:56vw;height:56vw;left:6%;top:10%;animation:dgblob 26s ease-in-out infinite alternate}
+.dg-bg .b2{width:46vw;height:46vw;right:4%;bottom:6%;animation:dgblob 32s ease-in-out infinite alternate-reverse}
+@keyframes dgblob{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(8vw,-6vh,0) scale(1.16)}}
+.dg-grain{position:absolute;inset:-50%;opacity:.055;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E")}
+.dg-plane{position:absolute;left:50%;top:50%;width:58.5vh;height:78vh;margin:-39vh 0 0 -29.25vh;will-change:transform,opacity,filter}
+.dg-card{position:absolute;inset:0;overflow:hidden;border-radius:10px;background:#0d0d0f;box-shadow:0 40px 130px rgba(0,0,0,.6)}
+.dg-card img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.dg-tag{position:absolute;left:2px;top:calc(100% + 2.8vh);display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);white-space:nowrap}
+.dg-tag i{width:11px;height:11px;border-radius:2px;background:#4a7ba6;flex:none}
+.dg-tag b{font-weight:500;color:rgba(255,255,255,.78)}
+.dg-hud{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);pointer-events:none}
+.dg-hud .idx{color:rgba(255,255,255,.9)}
+.dg-hud .sep{width:34px;height:1px;background:rgba(255,255,255,.25)}
+.dg.light .dg-tag,.dg.light .dg-hud{color:rgba(20,22,26,.6)}
+.dg.light .dg-tag b{color:rgba(20,22,26,.85)}
+.dg.light .dg-hud .idx{color:rgba(20,22,26,.9)}
+/* 静态摆位（无 JS / anim-off 降级）：第一张居中，其余向深处退去 */
+.dg-plane:nth-child(1){transform:translate3d(-4vw,0,0) scale(1)}
+.dg-plane:nth-child(2){transform:translate3d(16vw,0,-260px) scale(.76);opacity:.85;filter:blur(2px) brightness(.8)}
+.dg-plane:nth-child(3){transform:translate3d(-14vw,0,-520px) scale(.58);opacity:.6;filter:blur(4px) brightness(.62)}
+.dg-plane:nth-child(4){transform:translate3d(20vw,0,-780px) scale(.45);opacity:.4;filter:blur(6px) brightness(.5)}
+html.anim-off .dg{height:100vh}
 
 /* 宽幅主视觉 */
 .wide{max-width:1280px;margin:0 auto;padding:0 24px}
@@ -138,15 +155,16 @@ body.js .cover-inner{opacity:0;transform:translateY(80px) scale(.5);filter:blur(
 html.anim-off body{overflow:auto!important}
 html.anim-off .hv-frame{opacity:1!important;transform:translate(-50%,-50%)!important;animation:none!important}
 html.anim-off .hv-bigtext span,html.anim-off .hv-top,html.anim-off .hv-meta{opacity:1!important;transform:none!important;animation:none!important}
-html.anim-off .g-frame,html.anim-off .media{opacity:1!important;transform:none!important;clip-path:none!important;animation:none!important}
+html.anim-off .dg-plane{opacity:1!important;filter:none!important;animation:none!important}
+html.anim-off .media{opacity:1!important;transform:none!important;clip-path:none!important;animation:none!important}
 html.anim-off .cover-inner{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}
 html.anim-off .cover .pimg{animation:none!important}
 html.anim-off .lightbox{transition:none!important}
 
 @media (max-width:768px){
-.gallery{padding:0 7vw}
-.g-item,.g-item:nth-child(even),.g-item:nth-child(3),.g-item:last-child{width:78vw;max-width:none;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:12vh}
-.g-item:nth-child(2n){margin-left:6vw}
+.dg{height:430vh}
+.dg-plane{width:64vh;height:85.3vh;margin:-42.65vh 0 0 -32vh}
+.dg-tag{top:calc(100% + 2vh);font-size:10px}
 .chapter{padding:80px 24px 0}
 }
 </style></head>
@@ -202,12 +220,29 @@ html.anim-off .lightbox{transition:none!important}
 <h2>Freedom, authenticity, self-expression</h2>
 </div>
 
-<!-- 竖版作品：纯图错落画廊 -->
-<div class="gallery">
-<figure class="g-item"><div class="g-frame"><img class="g-pimg" data-full="/pages/virtual-shot-1.webp" src="/pages/virtual-shot-1.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 01：暗调影棚凝视特写" loading="lazy" decoding="async"></div></figure>
-<figure class="g-item"><div class="g-frame"><img class="g-pimg" data-full="/pages/virtual-shot-2.webp" src="/pages/virtual-shot-2.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 02：黑胶唱片店场景" loading="lazy" decoding="async"></div></figure>
-<figure class="g-item"><div class="g-frame"><img class="g-pimg" data-full="/pages/virtual-shot-3.webp" src="/pages/virtual-shot-3.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 03：车内公路场景" loading="lazy" decoding="async"></div></figure>
-<figure class="g-item"><div class="g-frame"><img class="g-pimg" data-full="/pages/virtual-shot-4.webp" src="/pages/virtual-shot-4.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 04：纯白影棚机车场景" loading="lazy" decoding="async"></div></figure>
+<!-- 深度画廊：Atmospheric Depth Gallery 式 Z 轴穿越（滚动=相机前进，鼠标=视差，速度=氛围） -->
+<div class="dg" id="dg">
+<div class="dg-stage">
+<div class="dg-bg" id="dgBg" style="background-color:#0e1216"><i class="b1" style="background-color:#31506f"></i><i class="b2" style="background-color:#14293d"></i></div>
+<div class="dg-grain"></div>
+<div class="dg-plane" data-word="Denim" data-pms="PMS 19-4052 TCX" data-accent="#4a7ba6" data-bg="#0e1216" data-b1="#31506f" data-b2="#14293d" data-x="-0.62">
+<div class="dg-card"><img class="g-pimg" data-full="/pages/virtual-shot-1.webp" src="/pages/virtual-shot-1.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 01：暗调影棚凝视特写" loading="lazy" decoding="async"></div>
+<figcaption class="dg-tag"><i></i><b>Denim</b><span>PMS 19-4052 TCX</span></figcaption>
+</div>
+<div class="dg-plane" data-word="Vinyl" data-pms="PMS 7517 C" data-accent="#b07a3f" data-bg="#17110c" data-b1="#8a5a2b" data-b2="#3a2a18" data-x="0.56">
+<div class="dg-card"><img class="g-pimg" data-full="/pages/virtual-shot-2.webp" src="/pages/virtual-shot-2.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 02：黑胶唱片店场景" loading="lazy" decoding="async"></div>
+<figcaption class="dg-tag"><i></i><b>Vinyl</b><span>PMS 7517 C</span></figcaption>
+</div>
+<div class="dg-plane" data-word="Roadtrip" data-pms="PMS 1595 C" data-accent="#d98e4a" data-bg="#101a24" data-b1="#c77b3f" data-b2="#46688a" data-x="-0.5">
+<div class="dg-card"><img class="g-pimg" data-full="/pages/virtual-shot-3.webp" src="/pages/virtual-shot-3.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 03：车内公路场景" loading="lazy" decoding="async"></div>
+<figcaption class="dg-tag"><i></i><b>Roadtrip</b><span>PMS 1595 C</span></figcaption>
+</div>
+<div class="dg-plane" data-word="Studio" data-pms="PMS 7527 C" data-accent="#8a97a5" data-bg="#e9e5de" data-b1="#cbb9a2" data-b2="#93a3b2" data-x="0.68" data-light="1">
+<div class="dg-card"><img class="g-pimg" data-full="/pages/virtual-shot-4.webp" src="/pages/virtual-shot-4.webp" width="1600" height="2141" alt="虚拟人 Levi's 大片 04：纯白影棚机车场景" loading="lazy" decoding="async"></div>
+<figcaption class="dg-tag"><i></i><b>Studio</b><span>PMS 7527 C</span></figcaption>
+</div>
+<div class="dg-hud"><span class="idx" id="dgIdx">01 / 04</span><span class="sep"></span><span id="dgWord">Denim</span></div>
+</div>
 </div>
 
 <div class="chapter">
@@ -263,8 +298,7 @@ window.addEventListener('touchstart',function once(){if(v.paused)tryPlay();},{on
 var off=document.documentElement.classList.contains('anim-off');
 var progress=document.getElementById('progress');
 var topbar=document.getElementById('topbar');
-var shots=Array.prototype.slice.call(document.querySelectorAll('.g-item'));
-var revealTargets=shots.concat(Array.prototype.slice.call(document.querySelectorAll('.wide')));
+var revealTargets=Array.prototype.slice.call(document.querySelectorAll('.wide'));
 
 /* 入场揭示 */
 if('IntersectionObserver' in window && !off){
@@ -274,7 +308,7 @@ revealTargets.forEach(function(el){io.observe(el);});
 revealTargets.forEach(function(el){el.classList.add('in');});
 }
 
-/* 图内视差 + 进度条（事件节流，兼容无 rAF 环境） */
+/* cover 滚动揭示 + 进度条（事件节流，兼容无 rAF 环境） */
 var ticking=false;
 function onScroll(){
 if(ticking)return;ticking=true;
@@ -298,22 +332,145 @@ ci.style.opacity=cp.toFixed(3);
 ci.style.filter='blur('+(24*(1-cp)).toFixed(1)+'px)';
 }
 }
-if(!off){
-shots.forEach(function(item){
-var frame=item.querySelector('.g-frame'),img=item.querySelector('.g-pimg');
-if(!frame||!img)return;
-var r=frame.getBoundingClientRect();
-var p=(window.innerHeight-r.top)/(window.innerHeight+r.height); /* -0.x ~ 1.x */
-p=Math.max(-.2,Math.min(1.2,p));
-img.style.transform='translateY('+((0.5-p)*10).toFixed(2)+'%)';
-});
-}
 ticking=false;
 },16);
 }
 window.addEventListener('scroll',onScroll,{passive:true});
 window.addEventListener('resize',onScroll);
 onScroll();
+
+/* ============ Atmospheric Depth Gallery 式深度穿越 ============
+ * 参考 tympanus.net/Tutorials/DepthGallery（Codrops）核心交互：
+ * 1) 滚动 → 相机沿 Z 轴穿越图片平面（planeGap=5 units，scrollSmoothing .08）
+ * 2) 滚动速度 velocity（damping .12，clamp ±1.5）→ 氛围提亮 + 图片动态模糊
+ * 3) 鼠标视差（x .16 / y .08 / smoothing .08）
+ * 4) 呼吸浮动（tilt .045 / scale .03）
+ * 5) mood 色背景随活跃图混合渐变 + 远处雾化淡入 + PMS 色卡标签
+ * 实现：CSS 3D 等价（perspective P，每帧按相机距离放置各平面）
+ */
+(function(){
+var dg=document.getElementById('dg');
+if(!dg)return;
+var planes=Array.prototype.slice.call(dg.querySelectorAll('.dg-plane'));
+if(!planes.length)return;
+var bg=document.getElementById('dgBg');
+var bgB1=bg.querySelector('.b1'),bgB2=bg.querySelector('.b2');
+var hudIdx=document.getElementById('dgIdx'),hudWord=document.getElementById('dgWord');
+var N=planes.length;
+
+/* 常量（与参考站一致的世界参数）：满屏距离 4.66 units，planeGap 5，前后视距偏移 5 */
+var P=1100, FULL=4.66, UNIT=P/FULL;
+var GAP=5*UNIT, OFFSET=5*UNIT;
+var TOTAL=(N-1)*GAP+OFFSET; /* 相机总行程：起点偏移 5 units，终点=最后一张图到达 */
+var PLANE_H=planes[0].offsetHeight||Math.round(window.innerHeight*.78);
+
+/* mood 数据 */
+var moods=planes.map(function(pl){return{
+bg:pl.dataset.bg,b1:pl.dataset.b1,b2:pl.dataset.b2,accent:pl.dataset.accent,
+word:pl.dataset.word,light:pl.dataset.light==='1'};});
+planes.forEach(function(pl){var t=pl.querySelector('.dg-tag i');if(t)t.style.background=pl.dataset.accent;});
+
+/* 平滑状态量 */
+var camCur=-OFFSET,camTarget=-OFFSET;   /* 相机已前进距离（0=起点） */
+var vel=0,prevCam=camCur;
+var ptrTX=0,ptrTY=0,ptrX=0,ptrY=0;      /* 鼠标视差（平滑） */
+
+function hex2rgb(h){h=h.replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];var n=parseInt(h,16);return[(n>>16)&255,(n>>8)&255,n&255];}
+function mixHex(a,b,t){var A=hex2rgb(a),B=hex2rgb(b);return'rgb('+Math.round(A[0]+(B[0]-A[0])*t)+','+Math.round(A[1]+(B[1]-A[1])*t)+','+Math.round(A[2]+(B[2]-A[2])*t)+')';}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+
+function readScroll(){
+var rect=dg.getBoundingClientRect();
+var total=dg.offsetHeight-window.innerHeight;
+var p=total>0?clamp(-rect.top/total,0,1):0;
+camTarget=p*TOTAL-OFFSET;              /* -OFFSET → (N-1)*GAP+OFFSET */
+}
+
+var lastTs=0;
+function frame(ts){
+var dt=Math.min(64,ts-lastTs||16);lastTs=ts;
+/* 相机平滑（scrollSmoothing .08 → 按帧率归一） */
+var k=1-Math.pow(1-.08,dt/16.7);
+camCur+=(camTarget-camCur)*k;
+/* 速度：damping .12，clamp ±1.5（units/s → 归一化） */
+var raw=(camCur-prevCam)/Math.max(dt,1)*16.7/UNIT;
+prevCam=camCur;
+vel+=(raw-vel)*Math.pow(1-.12,dt/16.7);
+vel=clamp(vel,-1.5,1.5);
+if(Math.abs(vel)<.001)vel=0;
+/* 鼠标平滑（smoothing .08） */
+ptrX+=(ptrTX-ptrX)*k;ptrY+=(ptrTY-ptrY)*k;
+
+var camU=camCur/UNIT;                  /* 相机当前深度（units），-5 → 20 */
+var f=clamp((camU+5)/5-1,0,N-1);       /* mood/进度混合因子：到达 plane i 时 = i */
+var i0=Math.min(N-1,Math.floor(f)),i1=Math.min(N-1,i0+1),bf=f-i0;
+
+/* 时间驱动呼吸 */
+var t=ts*.001;
+planes.forEach(function(pl,i){
+var zU=i*5;                             /* 平面深度（units），沿前进方向递增 */
+var dU=zU-camU;                         /* 相机到平面的前向距离 */
+var el=pl;
+if(dU<=-0.8||dU>=12.5){el.style.opacity='0';return;}
+var dPx=Math.max(dU*UNIT,1);
+var s=P/dPx;                             /* 透视缩放：满屏距离 4.66 units → s=1 */
+/* 雾化：远处模糊+压暗，穿近淡出 */
+var fog=clamp((dU-5.2)*1.5,0,11);
+var dim=clamp((dU-4.2)/10,0,.72);
+var near=clamp((0.9-dU)/0.9,0,1);        /* 贴脸淡出 */
+var o=clamp(1-fog/11,0,1)*(1-dim)*(1-near);
+/* 呼吸：tilt .045rad≈2.6deg，scale .03 */
+var tilt=Math.sin(t*.4+i*1.7)*.045;
+var brs=1+Math.sin(t*.55+i*.9)*.03;
+/* 鼠标视差（反向，x .16 / y .08 × 平面高） */
+var px=(-ptrX*.16*PLANE_H)*(0.6+s*.4);
+var py=(ptrY*.08*PLANE_H)*(0.6+s*.4);
+/* 平面基准 x（data-x × 平面高） */
+var bx=parseFloat(pl.dataset.x||0)*PLANE_H;
+var x=bx+px,y=py;
+var blurV=clamp(Math.abs(vel)*2.4,0,5); /* 速度动态模糊 */
+el.style.transition='none';
+el.style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0) rotateX('+(tilt*57.3).toFixed(2)+'deg) rotateZ('+(Math.sin(t*.33+i*2.1)*.6).toFixed(2)+'deg) scale('+(s*brs).toFixed(4)+')';
+el.style.filter='blur('+(fog+blurV).toFixed(1)+'px) brightness('+(1-dim).toFixed(3)+')';
+el.style.opacity=o.toFixed(3);
+el.style.zIndex=String(Math.round(500-dU*10));
+});
+
+/* mood 背景混合 + 速度提亮（uVelocityIntensity*0.10） */
+if(moods[i0]&&moods[i1]){
+bg.style.backgroundColor=mixHex(moods[i0].bg,moods[i1].bg,bf);
+bgB1.style.backgroundColor=mixHex(moods[i0].b1,moods[i1].b1,bf);
+bgB2.style.backgroundColor=mixHex(moods[i0].b2,moods[i1].b2,bf);
+}
+bg.style.filter='brightness('+(1+Math.abs(vel)*.09).toFixed(3)+')';
+dg.classList.toggle('light',!!(moods[Math.round(f)]&&moods[Math.round(f)].light));
+/* HUD */
+var ai=clamp(Math.round(f),0,N-1);
+hudIdx.textContent='0'+(ai+1)+' / 0'+N;
+hudWord.textContent=moods[ai].word;
+}
+
+/* 鼠标视差（pointermove → NDC） */
+window.addEventListener('pointermove',function(e){
+ptrTX=(e.clientX/window.innerWidth)*2-1;
+ptrTY=-(e.clientY/window.innerHeight)*2+1;
+},{passive:true});
+window.addEventListener('pointerleave',function(){ptrTX=0;ptrTY=0;});
+
+window.addEventListener('scroll',readScroll,{passive:true});
+window.addEventListener('resize',function(){PLANE_H=planes[0].offsetHeight||PLANE_H;readScroll();},{passive:true});
+readScroll();
+
+if(off){ /* 降级：静态摆位即可，不启动循环 */ return; }
+/* rAF 不可用环境（测试工具）→ setTimeout 兜底，保证可见 */
+function loop(ts){frame(ts||Date.now());tick();}
+function tick(){
+if(window.requestAnimationFrame){window.requestAnimationFrame(loop);}
+else{setTimeout(function(){loop(Date.now());},60);}
+}
+tick();
+})();
+
 
 /* 灯箱 */
 var lb=document.getElementById('lb'),lbImg=lb.querySelector('img'),lbCap=document.getElementById('lbCap');
