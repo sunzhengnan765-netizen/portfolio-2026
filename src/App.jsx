@@ -1,10 +1,17 @@
+import { lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Reveal from "./components/Reveal";
-import Resume from "./components/Resume";
-import Projects from "./components/Projects";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
+
+// 首屏以下组件懒加载，减小初始 JS 体积
+const Resume = lazy(() => import("./components/Resume"));
+const Projects = lazy(() => import("./components/Projects"));
+const Contact = lazy(() => import("./components/Contact"));
+const Footer = lazy(() => import("./components/Footer"));
+
+function SectionFallback() {
+  return <div style={{ minHeight: "50vh" }} />;
+}
 
 export default function App() {
   return (
@@ -13,12 +20,20 @@ export default function App() {
       <Hero />
       <section id="resume" className="w-full bg-[#020202]">
         <Reveal delay={0.1}>
-          <Resume />
+          <Suspense fallback={<SectionFallback />}>
+            <Resume />
+          </Suspense>
         </Reveal>
       </section>
-      <Projects />
-      <Contact />
-      <Footer />
+      <Suspense fallback={<SectionFallback />}>
+        <Projects />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <Contact />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <Footer />
+      </Suspense>
     </main>
   );
 }

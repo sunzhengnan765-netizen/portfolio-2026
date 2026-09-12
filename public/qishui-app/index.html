@@ -10,8 +10,22 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./qishui-assets/player-cover.png" />
     <title>Mobile Prototype Boilerplate</title>
-    <script type="module" crossorigin src="./assets/index-CLCT7a3r.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BUBoOz54.css">
+    <script type="module" crossorigin src="./assets/index-CLCT7a3r.js?v=5"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BUBoOz54.css?v=6">
+<script>
+(function(){
+  function fit(){
+    var s = Math.min((window.innerWidth-12)/354, (window.innerHeight-12)/770, 1);
+    s = Math.max(s, 0.45);
+    document.documentElement.style.setProperty('--fit', s);
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', fit);
+  if (window.visualViewport) visualViewport.addEventListener('resize', fit);
+})();
+</script>
+
   </head>
   <body>
     <div id="root"></div>

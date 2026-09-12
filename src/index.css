@@ -75,7 +75,7 @@ body {
 }
 
 .project-content.is-open {
-  max-height: 600px;
+  max-height: 1400px;
   opacity: 1;
   transform: translateY(0);
 }
@@ -110,17 +110,6 @@ body {
   transform: translateY(0);
 }
 
-/* 绿色块展开 */
-.hero-block {
-  width: 0;
-  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1s;
-  will-change: width;
-}
-
-.hero-revealed .hero-block {
-  width: 0.6em;
-}
-
 /* 背景层（极光 + 视频 + hue）延迟淡入 */
 .hero-bg-layer {
   opacity: 0;
@@ -148,18 +137,23 @@ body.hero-revealed .intro-fade {
   transform: translateY(0);
 }
 
-/* 顶部椭圆光晕 — 延迟淡入 + 微微下沉（配合整体入场节奏） */
-.hero-glow {
-  opacity: 0;
-  transform: translateX(-50%) translateY(-20px);
-  transition:
-    opacity 1.4s cubic-bezier(0.56, 0.22, 0.05, 0.99) 0.3s,
-    transform 1.4s cubic-bezier(0.56, 0.22, 0.05, 0.99) 0.3s;
-  will-change: opacity, transform;
+/* transition 不工作的环境（如部分自动化浏览器）：跳过动画直接显示最终态 */
+body.no-csstransition .hero-title,
+body.no-csstransition .hero-bg-layer,
+body.no-csstransition .intro-fade {
+  transition: none !important;
 }
 
-.hero-revealed .hero-glow,
-body.hero-revealed .hero-glow {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+body.no-csstransition .hero-title {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+body.no-csstransition .hero-bg-layer {
+  opacity: 1 !important;
+}
+
+body.no-csstransition .intro-fade {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }

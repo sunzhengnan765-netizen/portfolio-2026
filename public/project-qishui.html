@@ -150,10 +150,10 @@
   </div>
   <main>
     <figure class="p23-media">
-      <img src="pages/page-23-bg.jpg" alt="p23 汽水音乐 · AI 混合电台 封面">
+      <img src="pages/page-23-bg.webp" width="1600" height="900" alt="p23 汽水音乐 · AI 混合电台 封面" fetchpriority="high">
       <video class="side-demo" src="/demo.webm" autoplay loop muted playsinline preload="auto"></video>
     </figure>
-    <figure><img src="pages/page-24.jpg" alt="p24" loading="lazy"></figure>
+    <figure><img src="pages/page-24.webp" alt="p24" loading="lazy"></figure>
     <figure><div class="slide25">
       <div class="s25-content">
         <p class="s25-tag">汽水音乐 · 业务目标</p>
@@ -162,19 +162,19 @@
         <p class="s25-metric">指标：DAU、人均播放时长</p>
       </div>
     </div></figure>
-    <figure><img src="pages/page-26.jpg" alt="p26" loading="lazy"></figure>
-    <figure><img src="pages/page-27.jpg" alt="p27" loading="lazy"></figure>
-    <figure><img src="pages/page-28.jpg" alt="p28" loading="lazy"></figure>
-    <figure><img src="pages/page-29.jpg" alt="p29" loading="lazy"></figure>
-    <figure><img src="pages/page-30.jpg" alt="p30" loading="lazy"></figure>
-    <figure><img src="pages/page-31.jpg" alt="p31" loading="lazy"></figure>
-    <figure><img src="pages/page-32.jpg" alt="p32" loading="lazy"></figure>
+    <figure><img src="pages/page-26.webp" alt="p26" loading="lazy"></figure>
+    <figure><img src="pages/page-27.webp" alt="p27" loading="lazy"></figure>
+    <figure><img src="pages/page-28.webp" alt="p28" loading="lazy"></figure>
+    <figure><img src="pages/page-29.webp" alt="p29" loading="lazy"></figure>
+    <figure><img src="pages/page-30.webp" alt="p30" loading="lazy"></figure>
+    <figure><img src="pages/page-31.webp" alt="p31" loading="lazy"></figure>
+    <figure><img src="pages/page-32.webp" alt="p32" loading="lazy"></figure>
     <figure class="p33-media"><div class="slide33">
       <h2 class="s33-title">动效设计</h2>
       <p class="s33-note n1">AI电台属于定制化服务</p>
-      <div class="s33-demo d1"><video src="/loading-demo.mp4" autoplay loop muted playsinline preload="auto"></video></div>
+      <div class="s33-demo d1"><video class="lazy-video" src="/loading-demo.mp4" muted loop playsinline preload="none"></video></div>
       <p class="s33-note n2">任务无法量化时长不稳定的流程</p>
-      <div class="s33-demo d2"><img src="/loading-demo.gif" alt="加载动效"></div>
+      <div class="s33-demo d2"><img src="/loading-demo.webp" alt="加载动效"></div>
       <div class="card">
         <h2 class="title">晨光正在为你铺开</h2>
         <p class="breath"><span style="--i:0">正</span><span style="--i:1">在</span><span style="--i:2">编</span><span style="--i:3">排</span><span style="--i:4"> </span><span style="--i:5">3</span><span style="--i:6">0</span><span style="--i:7"> </span><span style="--i:8">分</span><span style="--i:9">钟</span><span style="--i:10">通</span><span style="--i:11">勤</span><span style="--i:12">节</span><span style="--i:13">目</span><span style="--i:14">，</span><span style="--i:15">请</span><span style="--i:16">稍</span><span style="--i:17">候</span></p>
@@ -187,11 +187,18 @@
       <p class="s33-card c1">用元素转移注意力<br>焦点减弱时间感</p>
       <p class="s33-card c2">文案呼吸感提醒用户<br>感知到内容正在加载</p>
     </div></figure>
-    <figure><img src="pages/page-34.jpg" alt="p34" loading="lazy"></figure>
-    <figure class="p35-media"><img src="pages/page-35-bg.jpg" alt="p35" loading="lazy"></figure>
-    <figure><img src="pages/page-36.jpg" alt="p36" loading="lazy"></figure>
+    <figure><img src="pages/page-34.webp" alt="p34" loading="lazy"></figure>
+    <figure class="p35-media"><img src="pages/page-35-bg.webp" alt="p35" loading="lazy"></figure>
+    <figure><img src="pages/page-36.webp" alt="p36" loading="lazy"></figure>
   </main>
-  <footer>
+<script>
+(function(){
+  var v=document.querySelector('.lazy-video');if(!v)return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){v.src=v.getAttribute('src')||v.src;v.play().catch(function(){});io.disconnect();}});},{rootMargin:'300px'});
+  io.observe(v);
+})();
+</script>
+<footer>
     <span>汽水音乐 · AI 混合电台 — C 端个人项目</span>
     <a href="/#projects" style="color:inherit;text-decoration:none">Back to top ↑</a>
   </footer>

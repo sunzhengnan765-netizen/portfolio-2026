@@ -10,31 +10,45 @@ export default function Hero() {
   const [revealed, setRevealed] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
-  // 入场动画触发
+  // 检测 CSS transition 是否工作
   useEffect(() => {
-    let raf1, raf2;
-    raf1 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(() => {
-        setRevealed(true);
-        document.body.classList.add("hero-revealed");
-      });
-    });
+    let t1;
+    t1 = setTimeout(async () => {
+      setRevealed(true);
+      document.body.classList.add("hero-revealed");
+      const works = await supportsTransition();
+      if (!works) document.body.classList.add("no-csstransition");
+    }, 100);
     return () => {
-      cancelAnimationFrame(raf1);
-      cancelAnimationFrame(raf2);
+      clearTimeout(t1);
       document.body.classList.remove("hero-revealed");
+      document.body.classList.remove("no-csstransition");
     };
   }, []);
 
+  function supportsTransition() {
+    return new Promise((resolve) => {
+      const el = document.createElement("div");
+      el.style.cssText = "position:absolute;opacity:0;transition:opacity 10ms;left:-9999px;";
+      document.body.appendChild(el);
+      void el.offsetHeight;
+      el.style.opacity = "1";
+      setTimeout(() => {
+        resolve(getComputedStyle(el).opacity === "1");
+        document.body.removeChild(el);
+      }, 50);
+    });
+  }
+
   // 滚动视差 — 仅 Hero 可见时更新，性能友好
   useEffect(() => {
-    let raf = null;
+    let timer = null;
     let ticking = false;
 
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
-      raf = requestAnimationFrame(() => {
+      timer = setTimeout(() => {
         if (sectionRef.current) {
           const rect = sectionRef.current.getBoundingClientRect();
           // 只在 Hero 顶部还在视口内时才更新（0 ~ viewportHeight）
@@ -43,13 +57,13 @@ export default function Hero() {
           }
         }
         ticking = false;
-      });
+      }, 16);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      if (raf) cancelAnimationFrame(raf);
+      if (timer) clearTimeout(timer);
     };
   }, []);
 
@@ -84,44 +98,6 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-ink/80 via-transparent to-transparent"
       />
 
-      {/* 中央顶部椭圆光晕 — 0.5x 视差 */}
-      <svg
-        aria-hidden="true"
-        className="hero-glow pointer-events-none absolute left-1/2 top-0 z-10"
-        width="1100"
-        height="420"
-        viewBox="0 0 1100 420"
-        fill="none"
-        style={{ transform: `translate3d(-50%, ${-scrollY * 0.5}px, 0)` }}
-      >
-        <defs>
-          <filter
-            id="esGlow"
-            x="-20%"
-            y="-20%"
-            width="140%"
-            height="140%"
-            filterUnits="objectBoundingBox"
-          >
-            <feGaussianBlur stdDeviation="25" />
-          </filter>
-          <radialGradient id="esGlowGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#5ed29c" stopOpacity="0.4" />
-            <stop offset="35%" stopColor="#22d3ee" stopOpacity="0.14" />
-            <stop offset="70%" stopColor="#134e39" stopOpacity="0.16" />
-            <stop offset="100%" stopColor="#070b0a" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-        <ellipse
-          cx="550"
-          cy="60"
-          rx="520"
-          ry="120"
-          fill="url(#esGlowGrad)"
-          filter="url(#esGlow)"
-        />
-      </svg>
-
       {/* 文字布局 */}
       <div className="absolute inset-0 z-20 flex flex-col px-6 pb-10 md:px-10 md:pb-12">
         <div className="flex-1" />
@@ -146,8 +122,7 @@ export default function Hero() {
           </ul>
 
           <div className="hidden md:flex md:items-center md:gap-16">
-            <p className="m-0 flex items-center gap-3 font-sans text-[12px] font-medium tracking-[0.12em] text-white/90 md:text-[13px]">
-              <span className="inline-block h-2 w-2 rounded-full bg-accent" />
+            <p className="m-0 font-sans text-[12px] font-medium tracking-[0.12em] text-white/90 md:text-[13px]">
               Vibe coding
             </p>
           </div>
@@ -155,18 +130,26 @@ export default function Hero() {
 
         <div className="flex-1" />
 
-        {/* 底部：标题整段上移 + 绿色块展开 — 0.15x 视差 */}
+        {/* 底部：优势一句话 + 大标题 + 中文名/过往公司 — 0.15x 视差 */}
         <div
           className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-12"
           style={{ transform: `translate3d(0, ${-titleParallax}px, 0)` }}
         >
-          <h1 className="hero-title m-0 whitespace-nowrap font-display text-[clamp(44px,7.5vw,150px)] font-medium leading-[0.95] tracking-[-0.03em] text-white">
-            Ethan—sun
-            <span
-              aria-hidden="true"
-              className="hero-block ml-[0.08em] inline-block h-[0.13em] w-[0.6em] bg-accent"
-            />
-          </h1>
+          <div className="flex flex-col gap-4 md:gap-5">
+            <p className="intro-fade m-0 font-display text-[clamp(15px,1.7vw,22px)] font-medium tracking-[0.02em] text-white/95">
+              深入业务的 B端/C端全链路设计师
+            </p>
+            <h1 className="hero-title m-0 whitespace-nowrap font-display text-[clamp(44px,7.5vw,150px)] font-medium leading-[0.95] tracking-[-0.03em] text-white">
+              Ethan—sun
+            </h1>
+            <p className="intro-fade m-0 font-sans text-[13px] tracking-[0.04em] md:text-[14px]">
+              <span className="text-white/50">中文名：</span>
+              <span className="text-white/90">孙正男</span>
+              <span className="mx-2 text-white/35">·</span>
+              <span className="text-white/50">过往公司：</span>
+              <span className="text-white/90">百度 / 联汇科技</span>
+            </p>
+          </div>
         </div>
       </div>
     </section>

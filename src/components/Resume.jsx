@@ -19,7 +19,7 @@ const projects = [
   },
   {
     company: "汽水音乐AI混合电台（C端）",
-    sub1: "",
+    sub1: "业务方向：C端音乐产品",
     role: "",
     period: "2026.8~2026.9",
     title: "",
@@ -205,7 +205,7 @@ export default function Resume() {
                     {p.sub1 && <span>{p.sub1}</span>}
                     {p.role && <span>{p.role}</span>}
                   </div>
-                  <span className="ml-auto font-display text-[clamp(12px,1.1vw,15px)] font-medium text-white/70">
+                  <span className="md:ml-auto font-display text-[clamp(12px,1.1vw,15px)] font-medium text-white/70">
                     {p.period}
                   </span>
                 </header>

@@ -16,9 +16,9 @@ const projects = [
     period: "2025.12 ～ 2026.02 · 19 pages",
     tags: ["B2G", "AI 安防", "交互设计", "界面落地"],
     thumbs: [
-      "/pages/qiaosi-preview-1.jpg",
-      "/pages/qiaosi-preview-2.jpg",
-      "/pages/qiaosi-preview-3.jpg",
+      "/pages/qiaosi-preview-1.webp",
+      "/pages/qiaosi-preview-2.webp",
+      "/pages/qiaosi-preview-3.webp",
     ],
     href: "/project-qiaosi.html",
   },
@@ -29,9 +29,9 @@ const projects = [
     period: "2026.08 ～ 2026.09 · 14 pages",
     tags: ["C 端", "AI 推荐", "情绪感知", "体验闭环"],
     thumbs: [
-      "/pages/qishui-preview-1.jpg",
-      "/pages/qishui-preview-2.jpg",
-      "/pages/qishui-preview-3.jpg",
+      "/pages/qishui-preview-1.webp",
+      "/pages/qishui-preview-2.webp",
+      "/pages/qishui-preview-3.webp",
     ],
     href: "/project-qishui.html",
   },
@@ -42,16 +42,96 @@ const projects = [
     period: "2026.03 · 3 pages",
     tags: ["电商", "活动 KV", "视觉延展", "主视觉"],
     thumbs: [
-      "/pages/baidu-preview-1.jpg",
-      "/pages/baidu-preview-2.jpg",
-      "/pages/baidu-preview-3.jpg",
+      "/pages/baidu-preview-1.webp",
+      "/pages/baidu-preview-2.webp",
+      "/pages/baidu-preview-3.webp",
     ],
     href: "/project-baidu.html",
+  },
+  {
+    num: "04",
+    name: ["虚拟人", "& 品牌视觉"],
+    desc: "虚拟人角色设计与商业视觉落地，包含角色三视图、建模主视觉及 Levi's 等品牌联名 campaign。用 3D + AI 技术为数字身份注入真实的时尚叙事与品牌表现力。",
+    period: "2026 · 品牌联名",
+    tags: ["3D 建模", "AI 视觉", "角色设计", "品牌联名"],
+    thumbs: ["/pages/virtual-preview-1.webp"],
+    href: "/project-virtual.html",
   },
 ];
 
 export default function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  /**
+   * Podium 式进入转场：点击卡片图/按钮时，把缩略图从卡片位置
+   * FLIP 放大铺满全屏，再跳转到项目页（项目页以同图入场，形成连续感）
+   */
+  const enterProject = (e, p, imgEl) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (
+      reduce ||
+      typeof Element === "undefined" ||
+      !Element.prototype.animate
+    ) {
+      return;
+    }
+    e.preventDefault();
+    const rect =
+      imgEl?.getBoundingClientRect?.() ??
+      document
+        .querySelectorAll("#projects .project-row")[projects.indexOf(p)]
+        ?.querySelector(".project-content img")
+        ?.getBoundingClientRect();
+    if (!rect) {
+      window.location.href = p.href;
+      return;
+    }
+    document.body.style.overflow = "hidden";
+    const layer = document.createElement("div");
+    layer.style.cssText =
+      "position:fixed;inset:0;z-index:9999;background:#060606;opacity:0;pointer-events:none";
+    const clone = document.createElement("img");
+    clone.src = imgEl?.currentSrc || imgEl?.src || p.thumbs[0];
+    clone.style.cssText = `position:absolute;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;object-fit:cover;border-radius:14px;will-change:transform;`;
+    layer.appendChild(clone);
+    document.body.appendChild(layer);
+
+    const cover = Math.max(
+      window.innerWidth / rect.width,
+      window.innerHeight / rect.height
+    );
+    const dx = window.innerWidth / 2 - (rect.left + rect.width / 2);
+    const dy = window.innerHeight / 2 - (rect.top + rect.height / 2);
+
+    layer.animate([{ opacity: 0 }, { opacity: 1 }], {
+      duration: 420,
+      easing: "ease-out",
+      fill: "forwards",
+    });
+    clone
+      .animate(
+        [
+          { transform: "translate(0,0) scale(1)", borderRadius: "14px" },
+          {
+            transform: `translate(${dx}px,${dy}px) scale(${cover})`,
+            borderRadius: "0px",
+          },
+        ],
+        {
+          duration: 820,
+          easing: "cubic-bezier(0.76,0,0.24,1)",
+          fill: "forwards",
+        }
+      )
+      .finished.then(() => {
+        window.location.href = p.href;
+      })
+      .catch(() => {
+        window.location.href = p.href;
+      });
+  };
 
   return (
     <section
@@ -89,7 +169,7 @@ export default function Projects() {
                 aria-expanded={isOpen}
               >
                 {/* 编号 */}
-                <span className="w-[52px] flex-shrink-0 text-[12px] tracking-[0.08em] text-white/50 transition-colors duration-300 group-hover:text-white/80 md:w-[64px]">
+                <span className="w-[52px] flex-shrink-0 text-[12px] tracking-[0.08em] text-white/50 transition-colors duration-300 group-hover:text-white/80 md:w-[72px] md:text-[16px]">
                   — {p.num}
                 </span>
 
@@ -125,33 +205,46 @@ export default function Projects() {
               {/* 展开内容 */}
               <div className={`project-content ${isOpen ? "is-open" : ""}`}>
                 <div className="project-content-inner">
-                  {/* 缩略图 — 移动端横向可滚动窄卡片，桌面端固定尺寸 */}
-                  <div className="mb-6 flex gap-3 overflow-x-auto pb-1 md:overflow-visible">
-                    {p.thumbs.map((src, ti) => (
-                      <div
+                  {/* 高清大图 — 点击进入完整项目 / 单图项目点击放大查看 */}
+                  <div
+                    className={`mb-7 grid grid-cols-1 gap-4 ${
+                      p.thumbs.length === 1 ? "" : "sm:grid-cols-2"
+                    }`}
+                  >
+                    {p.thumbs.slice(0, 2).map((src, ti) => (
+                      <a
                         key={ti}
-                        className="aspect-video w-[70vw] flex-shrink-0 overflow-hidden rounded-xl bg-white/5 md:h-[120px] md:w-[220px]"
+                        href={p.href}
+                        onClick={(e) =>
+                          enterProject(e, p, e.currentTarget.querySelector("img"))
+                        }
+                        aria-label={`查看完整项目：${p.name.join(" ")}`}
+                        className={`group/img relative block cursor-pointer overflow-hidden rounded-2xl bg-white/5 ${
+                          p.thumbs.length === 1
+                            ? "aspect-video"
+                            : "aspect-[16/10] md:aspect-video"
+                        }`}
                       >
                         <img
                           src={src}
-                          alt=""
+                          alt={`${p.name.join(" ")} 预览图 ${ti + 1}`}
                           loading="lazy"
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/img:scale-[1.04]"
                           onError={(e) => {
                             e.currentTarget.style.display = "none";
                           }}
                         />
-                      </div>
+                      </a>
                     ))}
                   </div>
 
                   {/* 描述（桌面端 + 移动端都显示） */}
-                  <p className="mb-5 text-[13px] leading-[1.6] text-white/60">
+                  <p className="mb-5 max-w-[720px] text-[13px] leading-[1.6] text-white/60 md:text-[14px]">
                     {p.desc}
                   </p>
 
                   {/* 标签 */}
-                  <div className="mb-7 flex flex-wrap gap-2">
+                  <div className="mb-8 flex flex-wrap gap-2">
                     {p.tags.map((tag, tgi) => (
                       <span
                         key={tgi}
@@ -162,15 +255,16 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  {/* 查看完整项目 */}
+                  {/* 查看完整项目 — 明显按钮 */}
                   <a
                     href={p.href}
-                    className="inline-flex items-center gap-2 text-[13px] tracking-[0.02em] text-white/90 transition-colors hover:text-white"
+                    onClick={(e) => enterProject(e, p)}
+                    className="inline-flex items-center gap-3 rounded-full border border-white/25 bg-white/[0.06] px-7 py-3.5 text-[14px] font-medium tracking-[0.02em] text-white transition-all duration-300 hover:border-white/60 hover:bg-white/10"
                   >
                     查看完整项目
                     <svg
-                      width="16"
-                      height="16"
+                      width="18"
+                      height="18"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
