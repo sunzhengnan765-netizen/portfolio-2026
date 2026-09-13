@@ -7,8 +7,7 @@
 :root{--ink:#060606;--serif:"Big Caslon","BigCaslon","Cormorant Garamond",Georgia,"Times New Roman",Songti SC,"SimSun",serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-/* 英文/数字走 Big Caslon，中文自动回落到 PingFang SC（Big Caslon 无 CJK 字形） */
-html,body{margin:0;padding:0;background:var(--ink);color:#eaeaea;font:15px/1.6 "Big Caslon","BigCaslon","Cormorant Garamond",Georgia,"Times New Roman",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;font-feature-settings:"liga","kern"}
+html,body{margin:0;padding:0;background:var(--ink);color:#eaeaea;font:15px/1.6 "Big Caslon","BigCaslon","Cormorant Garamond",Georgia,"Times New Roman",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;font-feature-settings:"liga","kern";overflow-x:clip}
 body.enter-lock{overflow:hidden}
 ::selection{background:#1d3a8a;color:#fff}
 
@@ -138,7 +137,15 @@ html.anim-off .dg{height:100vh}
 body.js .dg{height:740vh}
 .kv-scene{position:relative;z-index:6}
 body.js .kv-scene{margin-top:-100vh}
-.kv-card{margin:0 clamp(8px,1vw,16px);background:#0a0a0b;border:1px solid rgba(255,255,255,.07);border-radius:clamp(18px,2.2vw,30px);overflow:hidden;padding-bottom:56px;box-shadow:0 -50px 140px rgba(0,0,0,.55);will-change:transform}
+.kv-card{margin:0 clamp(8px,1vw,16px);background:#0a0a0b;border:1px solid rgba(255,255,255,.07);border-radius:clamp(18px,2.2vw,30px);box-shadow:0 -50px 140px rgba(0,0,0,.55);will-change:transform}
+
+/* Le Mans Classic curtain 式横向幕布（KV 两张横版大图）：
+   200vh 滚动区间 + sticky 100vh 舞台，纵向滚动 1:1 线性映射轨道 translateX */
+.kv-curtain{position:relative;height:200vh}
+.kc-stage{position:sticky;top:0;height:100vh;overflow:hidden;border-radius:clamp(18px,2.2vw,30px);background:#0a0a0b}
+.kc-track{display:flex;width:200%;height:100%;will-change:transform}
+.kc-slide{flex:0 0 50%;height:100%;display:flex;align-items:center;justify-content:center;padding:0 2.2vw}
+.kc-slide img{display:block;width:100%;height:auto;cursor:zoom-in;user-select:none}
 
 /* 宽幅主视觉 */
 .wide{max-width:1280px;margin:0 auto;padding:0 24px}
@@ -164,11 +171,18 @@ html.anim-off .cover .pimg{animation:none!important}
 html.anim-off .lightbox{transition:none!important}
 html.anim-off .kv-scene{margin-top:0}
 html.anim-off .kv-card{transform:none!important}
+html.anim-off .kv-curtain{height:auto}
+html.anim-off .kc-stage{position:static;height:auto;border-radius:0;transform:none}
+html.anim-off .kc-track{flex-direction:column;width:100%;height:auto;transform:none!important}
+html.anim-off .kc-slide{flex:none;width:100%;height:auto;padding:0 24px 24px}
 
 @media (max-width:768px){
 .dg{height:560vh}
 body.js .dg{height:660vh}
 .kv-card{margin:0 8px;border-radius:20px}
+/* top 取 vh-舞台高：视觉居中（translateY -50%）且 sticky 行程终点恰好对齐页面底，保证滑到 -50%；图片全宽出血 */
+.kc-stage{height:calc((100vw - 16px)*9/16 + 14vh);top:calc(86vh - (100vw - 16px)*9/16);transform:translateY(-50%);border-radius:20px}
+.kc-slide{padding:0}
 .dg-plane{--ph:88vh}
 .chapter{padding:80px 24px 0}
 }
@@ -254,9 +268,14 @@ body.js .dg{height:660vh}
 <h2>从角色到 campaign 的完整落地</h2>
 </div>
 
-<div class="wide" style="margin-top:40px">
-<figure class="media"><img src="/pages/virtual-kv-1.webp" width="2560" height="1440" alt="虚拟人 × Levi's 联名主视觉：黑皮沙发丹宁大片与红标 Logo 拼版" fetchpriority="high"></figure>
-<figure class="media"><img src="/pages/virtual-kv-2.webp" width="2560" height="1440" alt="Levi's 联名 campaign 视觉延展：深蓝影棚卡带音响场景" loading="lazy" decoding="async"></figure>
+<!-- Le Mans curtain 式横向幕布：两张横版 KV，纵向滚动驱动横向滑动 -->
+<div class="kv-curtain" id="kvCurtain">
+<div class="kc-stage">
+<div class="kc-track" id="kcTrack">
+<div class="kc-slide"><img src="/pages/virtual-kv-1.webp" width="2560" height="1440" alt="虚拟人 × Levi's 联名主视觉：黑皮沙发丹宁大片与红标 Logo 拼版" fetchpriority="high" decoding="async"></div>
+<div class="kc-slide"><img src="/pages/virtual-kv-2.webp" width="2560" height="1440" alt="Levi's 联名 campaign 视觉延展：深蓝影棚卡带音响场景" loading="lazy" decoding="async"></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -341,6 +360,16 @@ var ke=1-Math.pow(1-kp,3); /* easeOutCubic */
 kvCard.style.transform='rotate('+(2.2*(1-ke)).toFixed(3)+'deg) scale('+(0.965+0.035*ke).toFixed(4)+')';
 dgStageEl.style.transform='scale('+(1-0.055*ke).toFixed(4)+')';
 dgEl.style.opacity=(1-0.9*ke).toFixed(3);
+}
+/* Le Mans curtain：curtain 区间内纵向滚动 1:1 线性映射横向轨道（滚一屏切一张） */
+var kc=document.getElementById('kvCurtain'),kcs=document.querySelector('.kc-stage'),kct=document.getElementById('kcTrack');
+if(kc&&kcs&&kct&&!document.documentElement.classList.contains('anim-off')){
+var kr2=kc.getBoundingClientRect();
+var topCs=getComputedStyle(kcs).top;
+var stickTop=topCs.indexOf('%')>=0?parseFloat(topCs)/100*window.innerHeight:(parseFloat(topCs)||0);
+var kspan=kc.offsetHeight-kcs.offsetHeight; /* sticky 实际可移动行程（桌面=一屏，移动舞台更短） */
+var kp2=kspan>0?Math.max(0,Math.min(1,(-kr2.top+stickTop)/kspan)):0;
+kct.style.transform='translate3d('+(-kp2*50).toFixed(3)+'%,0,0)';
 }
 ticking=false;
 },16);
@@ -482,7 +511,7 @@ tick();
 var lb=document.getElementById('lb'),lbImg=lb.querySelector('img'),lbCap=document.getElementById('lbCap');
 function open(src,alt){lbImg.src=src;lbCap.textContent=alt||'';lb.classList.add('open');document.body.style.overflow='hidden';}
 function close(){lb.classList.remove('open');document.body.style.overflow='';setTimeout(function(){lbImg.src='';},300);}
-document.querySelectorAll('.g-pimg[data-full],.media img').forEach(function(im){
+document.querySelectorAll('.g-pimg[data-full],.media img,.kc-slide img').forEach(function(im){
 im.addEventListener('click',function(){open(im.getAttribute('data-full')||im.src,im.alt);});
 });
 lb.addEventListener('click',close);
