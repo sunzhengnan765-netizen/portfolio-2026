@@ -113,7 +113,7 @@ export default function Hero() {
               <li key={l.label}>
                 <a
                   href={l.href}
-                  className="font-sans text-[13px] font-medium tracking-[0.04em] text-white/90 transition-colors duration-200 hover:text-accent md:text-[15px]"
+                  className="inline-block rounded-md px-2 py-1 -mx-2 font-sans text-[13px] font-medium tracking-[0.04em] text-white/90 transition-colors duration-200 hover:bg-[#2f54b8] hover:text-white md:text-[15px]"
                 >
                   {l.label}
                 </a>
