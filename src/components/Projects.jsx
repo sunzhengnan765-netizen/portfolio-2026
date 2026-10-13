@@ -11,6 +11,7 @@ import Reveal from "./Reveal";
 const projects = [
   {
     num: "01",
+    cat: "UIUX 设计",
     name: ["乔司监狱", "视觉 AI 安防系统"],
     desc: "B2G 实习项目，负责视觉 AI 安防系统的交互与界面设计，从需求梳理到界面落地",
     period: "2025.12 ～ 2026.02 · 19 pages",
@@ -24,6 +25,7 @@ const projects = [
   },
   {
     num: "02",
+    cat: "UIUX 设计",
     name: ["汽水音乐", "AI 混合电台"],
     desc: "C 端个人项目，围绕 AI 个性化电台探索推荐、播放与情绪感知的体验闭环",
     period: "2026.08 ～ 2026.09 · 14 pages",
@@ -37,6 +39,7 @@ const projects = [
   },
   {
     num: "03",
+    cat: "视觉设计 + AIGC",
     name: ["百度优选", "省心选活动 KV"],
     desc: "C 端电商项目，负责活动主视觉 KV 与系列延展，把控从草图到上线的整体视觉节奏",
     period: "2026.03 · 3 pages",
@@ -50,12 +53,23 @@ const projects = [
   },
   {
     num: "04",
+    cat: "视觉设计 + AIGC",
     name: ["虚拟人", "& 品牌视觉"],
     desc: "虚拟人角色设计与商业视觉落地，包含角色三视图、建模主视觉及 Levi's 等品牌联名 campaign。用 3D + AI 技术为数字身份注入真实的时尚叙事与品牌表现力。",
     period: "2026 · 品牌联名",
     tags: ["3D 建模", "AI 视觉", "角色设计", "品牌联名"],
     thumbs: ["/pages/virtual-preview-1.webp"],
     href: "/project-virtual.html",
+  },
+  {
+    num: "05",
+    cat: "视觉设计 + AIGC",
+    name: ["抖音电竞节", "畅玩新世代系列海报"],
+    desc: "运营视觉项目，为抖音电竞节设计开屏海报与主 KV，通过友情、探险、荣誉三个主题展现视觉表现力；AIGC 辅助完成场景生成与人物合成",
+    period: "运营视觉 · 主 KV + 系列海报",
+    tags: ["运营视觉", "AIGC", "主 KV", "系列海报"],
+    thumbs: ["/pages/douyin-preview-1.webp", "/pages/douyin-preview-2.webp"],
+    href: null,
   },
 ];
 
@@ -155,9 +169,19 @@ export default function Projects() {
         <div className="border-t border-white/20">
         {projects.map((p, i) => {
           const isOpen = activeIndex === i;
+          const showCat = i === 0 || projects[i - 1].cat !== p.cat;
           return (
+            <div key={p.num}>
+              {/* 分类小标题 */}
+              {showCat && (
+                <div className={`flex items-center gap-5 ${i === 0 ? "pt-2" : "pt-14"} pb-1`}>
+                  <span className="text-[12px] font-normal uppercase tracking-[0.12em] text-white/55">
+                    {p.cat}
+                  </span>
+                  <span className="h-px flex-1 bg-white/15"></span>
+                </div>
+              )}
             <div
-              key={p.num}
               className="project-row border-b border-white/20 py-4"
               data-open={isOpen}
             >
@@ -211,20 +235,13 @@ export default function Projects() {
                       p.thumbs.length === 1 ? "" : "sm:grid-cols-2"
                     }`}
                   >
-                    {p.thumbs.slice(0, 2).map((src, ti) => (
-                      <a
-                        key={ti}
-                        href={p.href}
-                        onClick={(e) =>
-                          enterProject(e, p, e.currentTarget.querySelector("img"))
-                        }
-                        aria-label={`查看完整项目：${p.name.join(" ")}`}
-                        className={`group/img relative block cursor-pointer overflow-hidden rounded-2xl bg-white/5 ${
-                          p.thumbs.length === 1
-                            ? "aspect-video"
-                            : "aspect-[16/10] md:aspect-video"
-                        }`}
-                      >
+                    {p.thumbs.slice(0, 2).map((src, ti) => {
+                      const imgCls = `group/img relative block overflow-hidden rounded-2xl bg-white/5 ${
+                        p.thumbs.length === 1
+                          ? "aspect-video"
+                          : "aspect-[16/10] md:aspect-video"
+                      }`;
+                      const imgEl = (
                         <img
                           src={src}
                           alt={`${p.name.join(" ")} 预览图 ${ti + 1}`}
@@ -234,8 +251,25 @@ export default function Projects() {
                             e.currentTarget.style.display = "none";
                           }}
                         />
-                      </a>
-                    ))}
+                      );
+                      return p.href ? (
+                        <a
+                          key={ti}
+                          href={p.href}
+                          onClick={(e) =>
+                            enterProject(e, p, e.currentTarget.querySelector("img"))
+                          }
+                          aria-label={`查看完整项目：${p.name.join(" ")}`}
+                          className={`${imgCls} cursor-pointer`}
+                        >
+                          {imgEl}
+                        </a>
+                      ) : (
+                        <div key={ti} className={imgCls}>
+                          {imgEl}
+                        </div>
+                      );
+                    })}
                   </div>
 
                   {/* 描述（桌面端 + 移动端都显示） */}
@@ -255,7 +289,8 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  {/* 查看完整项目 — 明显按钮 */}
+                  {/* 查看完整项目 — 明显按钮（无详情页时不显示） */}
+                  {p.href && (
                   <a
                     href={p.href}
                     onClick={(e) => enterProject(e, p)}
@@ -276,8 +311,10 @@ export default function Projects() {
                       <path d="m12 5 7 7-7 7" />
                     </svg>
                   </a>
+                  )}
                 </div>
               </div>
+            </div>
             </div>
           );
         })}

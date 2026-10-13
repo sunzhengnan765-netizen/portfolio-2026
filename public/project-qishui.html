@@ -15,16 +15,8 @@
   main{display:flex;flex-direction:column;align-items:center;gap:18px;padding:18px 18px 60px}
   figure{margin:0;width:100%;max-width:1280px;background:#000;border-radius:6px;overflow:hidden;box-shadow:0 6px 30px rgba(0,0,0,.4)}
   figure img{display:block;width:100%;height:auto}
-  /* p23 封面 — 静态底图 + demo.webm 动效视频层（沿用 portfolio-html-v3 原版参数） */
+  /* p23 封面 — 静态底图（原 demo.webm 视频层已移除） */
   .p23-media{position:relative}
-  .p23-media .side-demo{
-    position:absolute;
-    left:68.1%; top:17.1%;
-    height:74.6%; width:auto;
-    border-radius:7.5% / 3.41%;
-    object-fit:cover;
-    box-shadow:0 24px 70px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.08);
-  }
   /* p33 动效设计 — 原版 slide33 完整实现（双加载 demo + 呼吸文字卡） */
   .p33-media{position:relative}
   .slide33{
@@ -151,7 +143,6 @@
   <main>
     <figure class="p23-media">
       <img src="pages/page-23-bg.webp" width="1600" height="900" alt="p23 汽水音乐 · AI 混合电台 封面" fetchpriority="high">
-      <video class="side-demo" src="/demo.webm" autoplay loop muted playsinline preload="auto"></video>
     </figure>
     <figure><img src="pages/page-24.webp" alt="p24" loading="lazy"></figure>
     <figure><div class="slide25">
