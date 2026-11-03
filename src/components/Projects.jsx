@@ -71,6 +71,16 @@ const projects = [
     thumbs: ["/pages/douyin-preview-1.webp", "/pages/douyin-preview-2.webp"],
     href: null,
   },
+  {
+    num: "06",
+    cat: "校园比赛 — 营销策划案",
+    name: ["赤尾「爱与火光」", "活动营销策划案"],
+    desc: "校园营销策划赛参赛作品。围绕品牌「与年轻人共燃」的命题，从市场洞察、人群策略到产品概念、传播节奏与视觉延展，输出 70 页完整策划案；同期完成包装、物料与校园地推落地。",
+    period: "2026.05 · 70 pages",
+    tags: ["营销策划案", "校园比赛", "品牌策略", "整合营销"],
+    thumbs: ["/pages/plan-01.webp", "/pages/plan-11.webp"],
+    href: "/project-plan.html",
+  },
 ];
 
 export default function Projects() {
